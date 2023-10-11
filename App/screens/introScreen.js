@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { View, Text, Image, Dimensions, TouchableOpacity, Linking } from 'react-native';
+import { View, Text, Image, Dimensions, TouchableOpacity } from 'react-native';
 import { StyleSheet } from 'react-native';
 
 const windowWidth = Dimensions.get('window').width;
@@ -20,10 +20,10 @@ export default function IntroScreen({ navigation }) {
             />
         </View>
         <View style={styles.botMenu}>
-            <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('')}>
+            <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('Intro')}>
               <Text style={styles.Text}>Entrar</Text>    
             </TouchableOpacity>
-            <Text style={styles.linkText} onPress={() => navigation.navigate('MyTest')}>
+            <Text style={styles.linkText} onPress={() => navigation.navigate('PresentationOne')}>
                 Novo por aqui? Crie sua conta
             </Text>
         </View>

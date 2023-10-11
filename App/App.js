@@ -1,8 +1,10 @@
 import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
-import MyTestScreen from './screens/MyTestScreen'; // Importe a tela de teste
-import IntroScreen from './screens/introScreen'; // Importe a tela de introdução
+import MyTestScreen from './screens/MyTestScreen';
+import IntroScreen from './screens/introScreen'; 
+import PresentationScreenOne from './screens/presentationScreenOne'; 
+import PresentationScreenTwo from './screens/presentationScreenTwo';
 
 const Stack = createStackNavigator();
 
@@ -13,6 +15,8 @@ export default function App() {
         {/* Defina a rota para a tela de teste */}
         <Stack.Screen name="Intro" component={IntroScreen} />
         <Stack.Screen name="MyTest" component={MyTestScreen} />
+        <Stack.Screen name="PresentationOne" component={PresentationScreenOne} />
+        <Stack.Screen name="PresentationTwo" component={PresentationScreenTwo} />
       </Stack.Navigator>
     </NavigationContainer>
   );
