@@ -28,7 +28,7 @@ export default function PresentationOne({ navigation }) {
             />
         </View>
         <View style={styles.botMenu}>
-            <TouchableOpacity onPress={() => navigation.navigate('MyTest')}>
+            <TouchableOpacity onPress={() => navigation.navigate('PresentationTwo')}>
                 <Image style={styles.arrowImage} source={require('../assets/arrowIcon.png')}/>
             </TouchableOpacity>
         </View>

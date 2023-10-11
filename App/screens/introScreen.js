@@ -20,7 +20,7 @@ export default function IntroScreen({ navigation }) {
             />
         </View>
         <View style={styles.botMenu}>
-            <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('Intro')}>
+            <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('MyTest')}>
               <Text style={styles.Text}>Entrar</Text>    
             </TouchableOpacity>
             <Text style={styles.linkText} onPress={() => navigation.navigate('PresentationOne')}>
