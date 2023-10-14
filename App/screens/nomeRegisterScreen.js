@@ -1,10 +1,11 @@
 import React, { useEffect } from 'react';
 import { View, Text, Image, Dimensions, TouchableOpacity, TextInput} from 'react-native';
 import { StyleSheet } from 'react-native';
+import arrowBack from '../assets/blackArrowIcon.png';
 
 const windowWidth = Dimensions.get('window').width;
 2
-export default function EmailRegister({ navigation }) {
+export default function NomeRegister({ navigation }) {
     useEffect(() => {
         navigation.setOptions({
           headerShown: false, // Esta opção oculta o cabeçalho da tela
@@ -13,24 +14,28 @@ export default function EmailRegister({ navigation }) {
 
   return (
     <View style={styles.container}>
-        <View style={styles.skipView}>
-            <Text style={styles.linkText} onPress={() => navigation.navigate('Intro')}>
-                Cancelar
-            </Text>
+        <View style={styles.navigateView}>
+            <View style={styles.arrowView}>
+                <TouchableOpacity onPress={() => navigation.navigate('EmailRegister')}>
+                    <Image source={arrowBack} style={styles.arrowIcon} onPress={() => navigation.navigate('EmailRegister')}/>
+                </TouchableOpacity>
+            </View>
+            <View style={styles.cancelView}>
+                <Text style={styles.linkText} onPress={() => navigation.navigate('Intro')}>
+                    Cancelar
+                </Text>
+            </View> 
+        </View>
+        <View style={styles.titleView}>
+                <Text style={styles.Title}>Digite seu nome</Text>
         </View>
         <View style={styles.formView}>
-            <View style={styles.titleView}>
-                    <Text style={styles.Title}>Crie sua conta</Text>
-            </View>
             <View style={styles.inputView}>
-                <Text style={styles.Text}>Digite seu Email</Text>
-                <TextInput style={styles.input} placeholder="email@vance.com"/>
-                <Text style={styles.Text}>Repita seu email</Text>
-                <TextInput style={styles.input} placeholder="email@vance.com"/>
+                <TextInput style={styles.input} placeholder="nome"/>
             </View>
         </View>
         <View style={styles.buttonView}>
-            <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('NomeRegister')}>
+            <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('MyTest')}>
               <Text style={styles.buttonText}>Continuar</Text>    
             </TouchableOpacity>
         </View>
@@ -45,12 +50,25 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         backgroundColor: '#fff',        
     },
-    skipView : {
-        width: windowWidth, 
-        height: '10%',
+    navigateView : {
+        width: windowWidth,
+        flexDirection: 'row', 
+        height: '15%',
+    },
+    arrowView:{
+        width: windowWidth*0.5,
+        alignItems: 'flex-start',
+        justifyContent: 'center',
+    },
+    arrowIcon:{
+        width: 20,
+        height: 20,
+        marginLeft: 20,
+    },
+    cancelView:{
+        width: windowWidth*0.5,
         alignItems: 'flex-end',
-        justifyContent: 'flex-end',
-        marginBottom: 10,
+        justifyContent: 'center',
     },
     linkText: {
         right: 20,
@@ -59,26 +77,20 @@ const styles = StyleSheet.create({
     },
     formView:{
         width: windowWidth, 
-        height:'75%',
+        height:'50%',
         alignItems: 'flex-start',
+        justifyContent: 'center',
     },
     titleView:{
         width: windowWidth,
         alignItems: 'flex-start',
-        justifyContent: 'center',
-        marginBottom: 150,
+        height: '10%',
     },
     Title:{
         fontSize: 35,
         fontWeight: 'bold',
         textAlign: 'left',
         marginLeft: 15,
-    },
-    Text:{
-        fontSize: 16,
-        textAlign: 'left',
-        marginLeft: 10,
-        color: '#00c0ce',
     },
     input:{
         width: windowWidth*0.85,
@@ -97,9 +109,9 @@ const styles = StyleSheet.create({
     },
     buttonView:{
         width: windowWidth, 
-        height:'15%',
+        height:'25%',
         alignItems: 'center',
-        justifyContent: 'top',
+        justifyContent: 'center',
     },
     button:{
         backgroundColor: '#00c0ce',

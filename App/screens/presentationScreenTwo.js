@@ -16,7 +16,7 @@ export default function PresentationTwo({ navigation }) {
   return (
     <View style={styles.container}>
         <View style={styles.skipView}>
-            <Text style={styles.linkText} onPress={() => navigation.navigate('Intro')}>
+            <Text style={styles.linkText} onPress={() => navigation.navigate('EmailRegister')}>
                 Pular
             </Text>
         </View>

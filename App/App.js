@@ -7,6 +7,7 @@ import PresentationScreenOne from './screens/presentationScreenOne';
 import PresentationScreenTwo from './screens/presentationScreenTwo';
 import LoginScreen from './screens/loginScreen';
 import EmailRegister from './screens/emailRegisterScreen';
+import NomeRegister from './screens/nomeRegisterScreen';
 
 const Stack = createStackNavigator();
 
@@ -21,6 +22,7 @@ export default function App() {
         <Stack.Screen name="PresentationTwo" component={PresentationScreenTwo} />
         <Stack.Screen name="Login" component={LoginScreen} />
         <Stack.Screen name="EmailRegister" component={EmailRegister} />
+        <Stack.Screen name="NomeRegister" component={NomeRegister} />
       </Stack.Navigator>
     </NavigationContainer>
   );
