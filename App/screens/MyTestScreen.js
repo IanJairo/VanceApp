@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { View, Text, Image, Dimensions, TouchableOpacity } from 'react-native';
+import { View, Text, Image, Dimensions, TouchableOpacity} from 'react-native';
 import { StyleSheet } from 'react-native';
 
 const windowWidth = Dimensions.get('window').width;

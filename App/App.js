@@ -5,6 +5,7 @@ import MyTestScreen from './screens/MyTestScreen';
 import IntroScreen from './screens/introScreen'; 
 import PresentationScreenOne from './screens/presentationScreenOne'; 
 import PresentationScreenTwo from './screens/presentationScreenTwo';
+import LoginScreen from './screens/loginScreen';
 
 const Stack = createStackNavigator();
 
@@ -17,6 +18,7 @@ export default function App() {
         <Stack.Screen name="MyTest" component={MyTestScreen} />
         <Stack.Screen name="PresentationOne" component={PresentationScreenOne} />
         <Stack.Screen name="PresentationTwo" component={PresentationScreenTwo} />
+        <Stack.Screen name="Login" component={LoginScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );

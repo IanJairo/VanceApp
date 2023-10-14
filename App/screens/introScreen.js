@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { View, Text, Image, Dimensions, TouchableOpacity } from 'react-native';
 import { StyleSheet } from 'react-native';
+import vanceLogo from '../assets/logo.png';
 
 const windowWidth = Dimensions.get('window').width;
 
@@ -16,11 +17,11 @@ export default function IntroScreen({ navigation }) {
         <View style={styles.imageView}>
             <Image
                 style={styles.image}
-                source={require('../assets/logo.png')}
+                source={vanceLogo}
             />
         </View>
         <View style={styles.botMenu}>
-            <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('Intro')}>
+            <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('Login')}>
               <Text style={styles.Text}>Entrar</Text>    
             </TouchableOpacity>
             <Text style={styles.linkText} onPress={() => navigation.navigate('PresentationOne')}>
