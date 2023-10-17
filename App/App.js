@@ -6,6 +6,12 @@ import IntroScreen from './screens/introScreen';
 import PresentationScreenOne from './screens/presentationScreenOne'; 
 import PresentationScreenTwo from './screens/presentationScreenTwo';
 import LoginScreen from './screens/loginScreen';
+import EmailRegister from './screens/emailRegisterScreen';
+import NomeRegister from './screens/nameRegisterScreen';
+import PasswordRegister from './screens/passwordRegisterScreen';
+import ResetPassword from './screens/passwordRecoveryScreen';
+import GeneratePin from './screens/generatePinScreen';
+import ValidatePin from './screens/validatePinScreen';
 
 const Stack = createStackNavigator();
 
@@ -19,6 +25,12 @@ export default function App() {
         <Stack.Screen name="PresentationOne" component={PresentationScreenOne} />
         <Stack.Screen name="PresentationTwo" component={PresentationScreenTwo} />
         <Stack.Screen name="Login" component={LoginScreen} />
+        <Stack.Screen name="EmailRegister" component={EmailRegister} />
+        <Stack.Screen name="NomeRegister" component={NomeRegister} />
+        <Stack.Screen name="SenhaRegister" component={PasswordRegister} />
+        <Stack.Screen name="ResetPassword" component={ResetPassword} />
+        <Stack.Screen name='GeneratePin' component={GeneratePin} />
+        <Stack.Screen name='ValidatePin' component={ValidatePin} />
       </Stack.Navigator>
     </NavigationContainer>
   );

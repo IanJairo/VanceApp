@@ -1,6 +1,8 @@
 import React, { useEffect } from 'react';
 import { View, Text, Image, Dimensions, TouchableOpacity} from 'react-native';
 import { StyleSheet } from 'react-native';
+import presentationIcon from '../assets/presentationIcon2.png';
+import arrowImage from '../assets/arrowIcon.png';
 
 const windowWidth = Dimensions.get('window').width;
 
@@ -14,7 +16,7 @@ export default function PresentationTwo({ navigation }) {
   return (
     <View style={styles.container}>
         <View style={styles.skipView}>
-            <Text style={styles.linkText} onPress={() => navigation.navigate('Intro')}>
+            <Text style={styles.linkText} onPress={() => navigation.navigate('EmailRegister')}>
                 Pular
             </Text>
         </View>
@@ -24,12 +26,12 @@ export default function PresentationTwo({ navigation }) {
         <View style={styles.imageView}>
             <Image
                 style={styles.image}
-                source={require('../assets/presentationIcon2.png')}
+                source={presentationIcon}
             />
         </View>
         <View style={styles.botMenu}>
-            <TouchableOpacity onPress={() => navigation.navigate('')}>
-                <Image style={styles.arrowImage} source={require('../assets/arrowIcon.png')}/>
+            <TouchableOpacity onPress={() => navigation.navigate('EmailRegister')}>
+                <Image style={styles.arrowImage} source={arrowImage}/>
             </TouchableOpacity>
         </View>
     </View>
