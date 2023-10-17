@@ -43,11 +43,11 @@ export default function LoginScreen({ navigation }) {
                     </TouchableOpacity>
                 </View>
                 
-                <Text style={styles.recoverPassword} onPress={() => navigation.navigate('Intro')}>Recuperar a senha</Text>
+                <Text style={styles.recoverPassword} onPress={() => navigation.navigate('GeneratePin')}>Recuperar a senha</Text>
             </View>
             </View>
         <View style={styles.buttonView}>
-            <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('MyTestScreen')}>
+            <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('')}>
               <Text style={styles.buttonText}>Continuar</Text>    
             </TouchableOpacity>
         </View>
@@ -110,7 +110,7 @@ const styles = StyleSheet.create({
         width: windowWidth*0.85,
         height: '20%',
         top: 10,
-        fontSize: 12,
+        fontSize: 15,
         color: '#00C0CE',
         textDecorationLine: 'underline',
         marginLeft: 10,
