@@ -22,7 +22,7 @@ export default function GeneratePin({ navigation }) {
         <Text style={[styles.text, {textAlign:'center'}]}>Informe o e-mail da conta para a qual deseja redefinir a senha.</Text>
       </View>
       <View style={styles.inputView}>
-        <Text style={[styles.text, {textAlign:'flex-start', marginLeft: 10}]}>Digite seu Email</Text>
+        <Text style={[styles.text, { marginLeft: 10}]}>Digite seu Email</Text>
         <TextInput style={styles.input} placeholder="email@vance.com"/>
         <Text style={styles.blueBar}></Text>
       </View>
