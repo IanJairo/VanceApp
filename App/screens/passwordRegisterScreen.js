@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { View, Text, Image, Dimensions, TouchableOpacity, TextInput} from 'react-native';
 import { StyleSheet } from 'react-native';
-import arrowBack from '../assets/blackArrowIcon.png';
+import arrowBack from '../assets/backArrow.png';
 import eyeOpened from '../assets/openEyeIcon.png';
 import eyeClosed from '../assets/closedEyeIcon.png';
 

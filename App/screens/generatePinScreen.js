@@ -50,8 +50,8 @@ const styles = StyleSheet.create({
       justifyContent: 'flex-end',
     },
     image : {
-      width: 165,
-      height: 165,
+      width: 160,
+      height: 160,
     },
     textView : {
       width: windowWidth*0.8,

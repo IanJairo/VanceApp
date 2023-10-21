@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { View, Text, Image, Dimensions, TouchableOpacity, TextInput} from 'react-native';
 import { StyleSheet } from 'react-native';
-import arrowBack from '../assets/blackArrowIcon.png';
+import arrowBack from '../assets/backArrow.png';
 
 const windowWidth = Dimensions.get('window').width;
 2

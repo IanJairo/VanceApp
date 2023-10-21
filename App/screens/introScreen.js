@@ -15,7 +15,7 @@ export default function IntroScreen({ navigation }) {
   return (
     <View style={styles.container}>
         <View style={styles.imageView}>
-            <Image
+            <Image 
                 style={styles.image}
                 source={vanceLogo}
             />
