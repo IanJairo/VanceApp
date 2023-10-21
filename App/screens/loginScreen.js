@@ -3,7 +3,7 @@ import { View, Text, Image, Dimensions, TouchableOpacity, TextInput } from 'reac
 import { StyleSheet } from 'react-native';
 import eyeOpened from '../assets/openEyeIcon.png'
 import eyeClosed from '../assets/closedEyeIcon.png'
-import arrowImage from '../assets/blackArrowIcon.png'
+import arrowImage from '../assets/backArrow.png'
 
 const windowWidth = Dimensions.get('window').width;
 const windowsHeight = Dimensions.get('window').height;

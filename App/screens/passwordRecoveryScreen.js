@@ -5,7 +5,7 @@ import eyeOpened from '../assets/openEyeIcon.png';
 import eyeClosed from '../assets/closedEyeIcon.png';
 
 const windowWidth = Dimensions.get('window').width;
-2
+
 export default function ResetPassword({ navigation }) {
     useEffect(() => {
         navigation.setOptions({

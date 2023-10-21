@@ -2,6 +2,8 @@ import React, { useEffect } from 'react';
 import { View, Text, Image, Dimensions, TouchableOpacity } from 'react-native';
 import { StyleSheet } from 'react-native';
 
+import arrowIcon from '../assets/arrowIcon.png';
+
 const windowWidth = Dimensions.get('window').width;
 
 export default function PresentationOne({ navigation }) {
@@ -29,7 +31,7 @@ export default function PresentationOne({ navigation }) {
         </View>
         <View style={styles.botMenu}>
             <TouchableOpacity onPress={() => navigation.navigate('PresentationTwo')}>
-                <Image style={styles.arrowImage} source={require('../assets/arrowIcon.png')}/>
+                <Image style={styles.arrowImage} source={arrowIcon}/>
             </TouchableOpacity>
         </View>
     </View>

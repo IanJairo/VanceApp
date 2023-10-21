@@ -40,7 +40,6 @@ export default function App() {
     <NavigationContainer>
       <Stack.Navigator >
         {/* Defina a rota para a tela de teste */}
-        <Stack.Screen name='MyTest' component={MyTest}/>
         <Stack.Screen name="Intro" component={IntroScreen} />
         <Stack.Screen name="PresentationOne" component={PresentationScreenOne} />
         <Stack.Screen name="PresentationTwo" component={PresentationScreenTwo} />
@@ -51,6 +50,7 @@ export default function App() {
         <Stack.Screen name="ResetPassword" component={ResetPassword} />
         <Stack.Screen name='GeneratePin' component={GeneratePin} />
         <Stack.Screen name='ValidatePin' component={ValidatePin} />
+        <Stack.Screen name='MyTest' component={MyTest}/>
         <Stack.Screen name='ConfigTab' component={ConfigTab} options={{
            headerTitle: '',
            }}/>
