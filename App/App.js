@@ -28,9 +28,9 @@ const Tab = createMaterialTopTabNavigator();
 function ConfigTab() {
   return (
     <Tab.Navigator>
-      <Tab.Screen name="Profile" component={Profile} tabBarIcon={() => <Image source={ profileIcon }/>}/>
-      <Tab.Screen name="Config" component={Config} tabBarIcon={() => <Image source={ brushIcon }/>}/>
-      <Tab.Screen name="About Us" component={AboutUs} tabBarIcon={() => <Image source={ aboutUsIcon }/>}/>
+      <Tab.Screen name="Profile" component={Profile} route={{ name: 'Profile' }} tabBarIcon={() => <Image source={ profileIcon }/>}/>
+      <Tab.Screen name="Config" component={Config} route={{ name: 'Config' }} tabBarIcon={() => <Image source={ brushIcon }/>}/>
+      <Tab.Screen name="About Us" component={AboutUs} route={{ name: 'AboutUs' }} tabBarIcon={() => <Image source={ aboutUsIcon }/>}/>
     </Tab.Navigator>
   );
 };
@@ -40,6 +40,7 @@ export default function App() {
     <NavigationContainer>
       <Stack.Navigator >
         {/* Defina a rota para a tela de teste */}
+        <Stack.Screen name='MyTest' component={MyTest}/>
         <Stack.Screen name="Intro" component={IntroScreen} />
         <Stack.Screen name="PresentationOne" component={PresentationScreenOne} />
         <Stack.Screen name="PresentationTwo" component={PresentationScreenTwo} />
@@ -50,9 +51,8 @@ export default function App() {
         <Stack.Screen name="ResetPassword" component={ResetPassword} />
         <Stack.Screen name='GeneratePin' component={GeneratePin} />
         <Stack.Screen name='ValidatePin' component={ValidatePin} />
-        <Stack.Screen name='MyTest' component={MyTest}/>
         <Stack.Screen name='ConfigTab' component={ConfigTab} options={{
-           headerTitle: '',
+           headerTitle: 'cu',
            }}/>
       </Stack.Navigator>
     </NavigationContainer>
