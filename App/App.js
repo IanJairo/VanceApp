@@ -1,5 +1,5 @@
 import React from 'react';
-// import { View, StyleSheet, Dimensions, Text, Image, TouchableOpacity } from 'react-native';
+import { Dimensions, Image} from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
@@ -25,12 +25,34 @@ import aboutUsIcon from './assets/awardIcon.png';
 const Stack = createStackNavigator();
 const Tab = createMaterialTopTabNavigator();
 
+const iconSelector = (route) => {
+  switch (route.name) {
+    case 'Profile':
+      return <Image source={profileIcon} style={{width: 25, height: 25}}/>;
+    case 'About Us':
+      return <Image source={aboutUsIcon} style={{width: 27, height: 30}}/>;
+    case 'Config':
+      return <Image source={brushIcon} style={{width: 25, height: 35}}/>;
+  }
+};
+
 function ConfigTab() {
+
   return (
-    <Tab.Navigator>
-      <Tab.Screen name="Profile" component={Profile} route={{ name: 'Profile' }} tabBarIcon={() => <Image source={ profileIcon }/>}/>
-      <Tab.Screen name="Config" component={Config} route={{ name: 'Config' }} tabBarIcon={() => <Image source={ brushIcon }/>}/>
-      <Tab.Screen name="About Us" component={AboutUs} route={{ name: 'AboutUs' }} tabBarIcon={() => <Image source={ aboutUsIcon }/>}/>
+    <Tab.Navigator
+      screenOptions={ ({route}) => ({ tabBarIcon: () => iconSelector(route)})}
+      tabBarOptions={{
+        showLabel: false,
+        style: {
+          borderTopColor: 'red',
+          elevatiopn: 1,
+          height: 60,
+        },
+      }}
+    >
+      <Tab.Screen name="Profile" component={Profile}/>
+      <Tab.Screen name="Config" component={Config} />
+      <Tab.Screen name="About Us" component={AboutUs} />
     </Tab.Navigator>
   );
 };
@@ -52,8 +74,8 @@ export default function App() {
         <Stack.Screen name='GeneratePin' component={GeneratePin} />
         <Stack.Screen name='ValidatePin' component={ValidatePin} />
         <Stack.Screen name='ConfigTab' component={ConfigTab} options={{
-           headerTitle: 'cu',
-           }}/>
+          headerTitle: '',
+          }}/>
       </Stack.Navigator>
     </NavigationContainer>
   );
