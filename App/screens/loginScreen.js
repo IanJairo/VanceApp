@@ -127,8 +127,8 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
     },
     eyeImage:{
-        width: 18,
-        height: 18,
+        width: 20,
+        height: 20,
     },
     buttonView:{
         width: windowWidth, 

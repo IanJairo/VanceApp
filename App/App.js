@@ -1,5 +1,5 @@
 import React from 'react';
-// import { View, StyleSheet, Dimensions, Text, Image, TouchableOpacity } from 'react-native';
+import { Dimensions, Image} from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
@@ -25,12 +25,34 @@ import aboutUsIcon from './assets/awardIcon.png';
 const Stack = createStackNavigator();
 const Tab = createMaterialTopTabNavigator();
 
+const iconSelector = (route) => {
+  switch (route.name) {
+    case 'Profile':
+      return <Image source={profileIcon} style={{width: 25, height: 25}}/>;
+    case 'About Us':
+      return <Image source={aboutUsIcon} style={{width: 27, height: 30}}/>;
+    case 'Config':
+      return <Image source={brushIcon} style={{width: 25, height: 35}}/>;
+  }
+};
+
 function ConfigTab() {
+
   return (
-    <Tab.Navigator>
-      <Tab.Screen name="Profile" component={Profile} tabBarIcon={() => <Image source={ profileIcon }/>}/>
-      <Tab.Screen name="Config" component={Config} tabBarIcon={() => <Image source={ brushIcon }/>}/>
-      <Tab.Screen name="About Us" component={AboutUs} tabBarIcon={() => <Image source={ aboutUsIcon }/>}/>
+    <Tab.Navigator
+      screenOptions={ ({route}) => ({ tabBarIcon: () => iconSelector(route)})}
+      tabBarOptions={{
+        showLabel: false,
+        style: {
+          borderTopColor: 'red',
+          elevatiopn: 1,
+          height: 60,
+        },
+      }}
+    >
+      <Tab.Screen name="Profile" component={Profile}/>
+      <Tab.Screen name="Config" component={Config} />
+      <Tab.Screen name="About Us" component={AboutUs} />
     </Tab.Navigator>
   );
 };
@@ -40,6 +62,7 @@ export default function App() {
     <NavigationContainer>
       <Stack.Navigator >
         {/* Defina a rota para a tela de teste */}
+        <Stack.Screen name='MyTest' component={MyTest}/>
         <Stack.Screen name="Intro" component={IntroScreen} />
         <Stack.Screen name="PresentationOne" component={PresentationScreenOne} />
         <Stack.Screen name="PresentationTwo" component={PresentationScreenTwo} />
@@ -50,10 +73,9 @@ export default function App() {
         <Stack.Screen name="ResetPassword" component={ResetPassword} />
         <Stack.Screen name='GeneratePin' component={GeneratePin} />
         <Stack.Screen name='ValidatePin' component={ValidatePin} />
-        <Stack.Screen name='MyTest' component={MyTest}/>
         <Stack.Screen name='ConfigTab' component={ConfigTab} options={{
-           headerTitle: '',
-           }}/>
+          headerTitle: '',
+          }}/>
       </Stack.Navigator>
     </NavigationContainer>
   );
