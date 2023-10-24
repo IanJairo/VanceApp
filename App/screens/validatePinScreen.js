@@ -78,7 +78,7 @@ const styles = StyleSheet.create({
     },
     image : {
       width: 160,
-      height: 160,
+      height: 170,
     },
     textView : {
       width: windowWidth*0.8,

@@ -107,7 +107,7 @@ const renderButton = (value, index) => {
             size={25}
             fillColor="#00c0ce"
             unfillColor="#fff"
-            text=" Bold Font"
+            text="Negrito"
             iconStyle={{ borderColor: "#00c0ce" }}
             innerIconStyle={{ borderWidth: 2, borderRadius: 5 }}
             textStyle={{ color: '#00c0ce', textDecorationLine: 'none' }}

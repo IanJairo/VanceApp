@@ -29,7 +29,7 @@ export default function Profile({ navigation }) {
       </View>
       <View style={styles.signOutView}>
         <TouchableOpacity style={styles.signOutButton} onPress={() => navigation.navigate('Login') }>
-          <Text style={styles.signOutText}>Sign Out</Text>
+          <Text style={styles.signOutText}>Sair</Text>
           <Image 
             style={styles.logoutIcon} 
             source={logoutIcon}
@@ -42,11 +42,11 @@ export default function Profile({ navigation }) {
           <Text style={{ textDecorationLine: 'underline', fontSize: 18 }}>neymarjr@vance.com</Text>
         </View>
         <View style={styles.statistic}>
-          <Text style={styles.identificationText}>Total notes:</Text>
+          <Text style={styles.identificationText}>Total de notas:</Text>
           <Text>numero</Text>
         </View>
         <View style={styles.statistic}>
-          <Text style={styles.identificationText}>Shared notes:</Text>
+          <Text style={styles.identificationText}>Compartilhadas:</Text>
           <Text>numero</Text>
         </View>
       </View>
@@ -89,7 +89,7 @@ const styles = StyleSheet.create({
       fontSize: 25,
       fontWeight: 'bold',
       color: '#5D5C5C',
-      fontFamily: 'Poppins',
+      // fontFamily: 'Poppins',
     },
     signOutView: {
       top: 8,
@@ -125,6 +125,6 @@ const styles = StyleSheet.create({
     identificationText:{
       fontSize: 20,
       color: '#00C0CE',
-      fontFamily: 'Poppins',
+      // fontFamily: 'Poppins',
     },
   });
