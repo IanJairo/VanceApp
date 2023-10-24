@@ -1,8 +1,10 @@
 import React from 'react';
 import { Dimensions, Image} from 'react-native';
-import { NavigationContainer } from '@react-navigation/native';
+import { NavigationContainer, ThemeProvider } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
+
+
 import IntroScreen from './screens/introScreen'; 
 import PresentationScreenOne from './screens/presentationScreenOne'; 
 import PresentationScreenTwo from './screens/presentationScreenTwo';
@@ -21,6 +23,8 @@ import MyTest from './screens/MyTestScreen';
 import profileIcon from './assets/profileIcon.png';
 import brushIcon from './assets/brushIcon.png';
 import aboutUsIcon from './assets/awardIcon.png';
+
+import { themeProvider } from './context/theme';
 
 const Stack = createStackNavigator();
 const Tab = createMaterialTopTabNavigator();
@@ -59,24 +63,26 @@ function ConfigTab() {
 
 export default function App() {
   return (
-    <NavigationContainer>
-      <Stack.Navigator >
-        {/* Defina a rota para a tela de teste */}
-        <Stack.Screen name='MyTest' component={MyTest}/>
-        <Stack.Screen name="Intro" component={IntroScreen} />
-        <Stack.Screen name="PresentationOne" component={PresentationScreenOne} />
-        <Stack.Screen name="PresentationTwo" component={PresentationScreenTwo} />
-        <Stack.Screen name="Login" component={LoginScreen} />
-        <Stack.Screen name="EmailRegister" component={EmailRegister} />
-        <Stack.Screen name="NomeRegister" component={NomeRegister} />
-        <Stack.Screen name="SenhaRegister" component={PasswordRegister} />
-        <Stack.Screen name="ResetPassword" component={ResetPassword} />
-        <Stack.Screen name='GeneratePin' component={GeneratePin} />
-        <Stack.Screen name='ValidatePin' component={ValidatePin} />
-        <Stack.Screen name='ConfigTab' component={ConfigTab} options={{
-          headerTitle: '',
-          }}/>
-      </Stack.Navigator>
-    </NavigationContainer>
+    <ThemeProvider>
+      <NavigationContainer>
+        <Stack.Navigator >
+          {/* Defina a rota para a tela de teste */}
+          <Stack.Screen name='MyTest' component={MyTest}/>
+          <Stack.Screen name="Intro" component={IntroScreen} />
+          <Stack.Screen name="PresentationOne" component={PresentationScreenOne} />
+          <Stack.Screen name="PresentationTwo" component={PresentationScreenTwo} />
+          <Stack.Screen name="Login" component={LoginScreen} />
+          <Stack.Screen name="EmailRegister" component={EmailRegister} />
+          <Stack.Screen name="NomeRegister" component={NomeRegister} />
+          <Stack.Screen name="SenhaRegister" component={PasswordRegister} />
+          <Stack.Screen name="ResetPassword" component={ResetPassword} />
+          <Stack.Screen name='GeneratePin' component={GeneratePin} />
+          <Stack.Screen name='ValidatePin' component={ValidatePin} />
+          <Stack.Screen name='ConfigTab' component={ConfigTab} options={{
+            headerTitle: '',
+            }}/>
+        </Stack.Navigator>
+      </NavigationContainer>
+    </ThemeProvider>
   );
 }

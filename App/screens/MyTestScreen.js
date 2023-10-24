@@ -12,6 +12,14 @@ export default function MyTest({ navigation }) {
         });
       }, []);
 
+    const changeTheme = () => {
+        if (global.theme.theme == 'dark') {
+            global.theme.setState({theme: 'light'});
+        } else {
+            global.theme.setState({theme: 'dark'});
+        }
+    }
+
   return (
     <View style={styles.container}>
         <View style={styles.imageView}>

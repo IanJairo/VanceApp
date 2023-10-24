@@ -1,6 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState,useContext } from 'react';
 import { StyleSheet, View, Text, Image, Dimensions, TouchableOpacity } from 'react-native';
 import BouncyCheckbox from "react-native-bouncy-checkbox";
+import { themeContext } from '../context/theme';
+import { useColorScheme } from 'react-native';
 
 import lightModeIcon from '../assets/lightModeIcon.png';
 import darkModeIcon from '../assets/nightModeIcon.png';
@@ -12,12 +14,25 @@ export default function Config({ navigation }) {
 
   const [selectedButtonIndex, setSelectedButtonIndex] = useState(null);
   const [isSelected, setSelection] = useState(false);
+  const {theme, togleTheme} = useContext(themeContext);
+  const colorScheme = useColorScheme();
+
+
 
   useEffect(() => {
     navigation.setOptions({
       headerShown: false,
     });
   }, []);
+
+  const changeTheme = () => {
+    if (colorScheme == null){
+      return;
+    }
+    if (theme != colorScheme) {
+      togleTheme();
+    }
+  }
 
   const handleButtonPress = (index) => {
     setSelectedButtonIndex(index);
@@ -58,7 +73,8 @@ const renderButton = (value, index) => {
         <Text style={styles.h2}>Tema</Text>
         <View style={styles.rowView}>
           <View style={styles.columnView}>
-            <TouchableOpacity onPress={() => navigation.navigate('MyTest')}>
+          {/* onPress={() => navigation.navigate('MyTest')} */}
+            <TouchableOpacity onPress={() => console.log(theme)}>
               <Image
                 style={styles.image}
                 source={lightModeIcon}
@@ -67,7 +83,7 @@ const renderButton = (value, index) => {
             <Text>Modo Claro</Text>
           </View>
           <View style={styles.columnView}>
-            <TouchableOpacity onPress={() => navigation.navigate('MyTest')}>
+            <TouchableOpacity onPress={() => console.log(theme)}>
               <Image
                 style={styles.image}
                 source={darkModeIcon}
