@@ -16,6 +16,7 @@ import ValidatePin from './screens/validatePinScreen';
 import Profile from './screens/profileTabScreen';
 import AboutUs from './screens/aboutUsTabScreen';
 import MyTest from './screens/MyTestScreen';
+import HomeScreen from './screens/home';
 
 import profileIcon from './assets/profileIcon.png';
 import aboutUsIcon from './assets/awardIcon.png';
@@ -57,6 +58,7 @@ export default function App() {
       <NavigationContainer>
         <Stack.Navigator >
           {/* Defina a rota para a tela de teste */}
+          <Stack.Screen name="Home" component={HomeScreen} />
           <Stack.Screen name="Intro" component={IntroScreen} />
           <Stack.Screen name='MyTest' component={MyTest}/>
           <Stack.Screen name="PresentationOne" component={PresentationScreenOne} />
