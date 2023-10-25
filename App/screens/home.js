@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, Image, Dimensions, TouchableOpacity, ScrollView} from 'react-native';
+import { View, Text, Image, Dimensions, TouchableOpacity, ScrollView, AsyncStorage} from 'react-native';
 import { StyleSheet } from 'react-native';
 import { FAB } from 'react-native-paper';
+import RenderHTML from 'react-native-render-html';
+
 
 import profileIcon from '../assets/neyDayFlamengo.png'
 import underline from '../assets/underline.png'
@@ -11,16 +13,13 @@ const windowWidth = Dimensions.get('window').width;
 
 export default function HomeScreen({ navigation }) {
     useEffect(() => {
-        navigation.setOptions({
-          headerShown: false, // Esta opção oculta o cabeçalho da tela
-        });
-      }, []);
-
+            navigation.setOptions({
+                headerShown: false, // Esta opção oculta o cabeçalho da tela
+            });
+        }, []);
 
       const [selectedButtonIndex, setSelectedButtonIndex] = useState(0);
       const [isSelected, setSelection] = useState(false);
-      const [selectedButton, setSelectedButton] = useState('Notas');
-      const [isButton, setButton] = useState(false);
       
       const handleButtonPress = (index) => {
           setSelectedButtonIndex(index);
@@ -34,10 +33,10 @@ export default function HomeScreen({ navigation }) {
               style={{
                 backgroundColor: isSelected ? '#00c0ce' : 'white',
                 borderRadius: 20,
-                alignItems: 'flex-start',
+                alignItems: 'center',
                 justifyContent: 'center',
                 width: windowWidth*0.282,
-                height: 170,
+                height: 120,
                 margin: 10,
                 shadowColor: '#000',
                 shadowOffset: {
@@ -50,27 +49,27 @@ export default function HomeScreen({ navigation }) {
               }}
               onPress={() => handleButtonPress(index)}
             >
-              <Text style={{ color: isSelected ? 'white' : '#5D5C5C',fontSize: isSelected? 40 : 30, marginLeft: 20, fontWeight: 'bold', marginBottom: 30 }}>{value[0]}</Text>
-              <Text style={{ color: isSelected ? 'white' : '#5D5C5C',fontSize: isSelected? 14 : 12, marginLeft: 5 }}>{value[1]}</Text>
+              <Text style={{ color: isSelected ? 'white' : '#5D5C5C',fontSize: isSelected? 40 : 30, fontWeight: 'bold'}}>{value}</Text>
             </TouchableOpacity>
           );
         };
 
     const renderTextButton = (value, index) => {
-        const isButton = selectedButton === index;
+        const isSelected = selectedButtonIndex === index;
         return (
             <TouchableOpacity
             key={index}
             style={{
-                width: windowWidth*0.285,
+                width: windowWidth*0.3,
                 height: 30,
-                marginRight: 10,
                 alignItems: 'center',
+                justifyContent: 'center',
+                marginRight: 15,
             }}
-            onPress={() => setSelectedButton(index)}
+            onPress={() => handleButtonPress(index)}
             >
-                <Text style={{ color: isButton ? 'black' : '#5D5C5C', fontSize: 14, fontWeight: isButton ? 'bold' : null,}}>{value}</Text>
-                <Image source={isButton  ? underline : null} style={{ justifyContent: 'flex-start', alignItems: 'center',}}/>
+                <Text style={{ color: isSelected ? 'black' : '#5D5C5C', fontSize: 14, fontWeight: isSelected ? 'bold' : null,}}>{value}</Text>
+                <Image source={isSelected  ? underline : null} style={{ justifyContent: 'center', alignItems: 'center',}}/>
             </TouchableOpacity>
         );
         };
@@ -85,18 +84,22 @@ export default function HomeScreen({ navigation }) {
             </View>
         </View>
         <View style={styles.statisticView}>
-            {[[5,'Notas'],[2,'Favoritas'],[2,'Compartilhadas']].map((value, index) => renderButton(value, index))}
+            {[5,2,2].map((value, index) => renderButton(value, index))}
         </View>
         <View style={{ width: windowWidth, height: '5%', flexDirection: 'row', }}>
             {["Notas","Favoritas","Compartilhadas"].map((value, index) => renderTextButton(value, index))}
         </View>
         <View style={styles.notesViews}>
-            
+            {/* <RenderHTML
+                contentWidth={windowWidth*0.9}
+                source={htmlContent}
+            /> */}
         </View>
         <FAB
             icon="plus"
             style={styles.fab}
             onPress={() => console.log('Pressed')}
+            backgroundColor='red'
         />
     </View>
   );
@@ -142,7 +145,7 @@ const styles = StyleSheet.create({
     statisticView: {
         flexDirection: 'row',
         width: windowWidth,
-        height: '25%',
+        height: '18%',
     },
     fab: {
         position: 'absolute',

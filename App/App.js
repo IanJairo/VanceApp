@@ -58,9 +58,9 @@ export default function App() {
       <NavigationContainer>
         <Stack.Navigator >
           {/* Defina a rota para a tela de teste */}
+          <Stack.Screen name='MyTest' component={MyTest}/>
           <Stack.Screen name="Home" component={HomeScreen} />
           <Stack.Screen name="Intro" component={IntroScreen} />
-          <Stack.Screen name='MyTest' component={MyTest}/>
           <Stack.Screen name="PresentationOne" component={PresentationScreenOne} />
           <Stack.Screen name="PresentationTwo" component={PresentationScreenTwo} />
           <Stack.Screen name="Login" component={LoginScreen} />
