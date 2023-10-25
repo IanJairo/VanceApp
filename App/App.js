@@ -53,24 +53,12 @@ function ConfigTab() {
 };
 
 export default function App() {
-  const [theme, setTheme] = useState('light');
-
-  const togleTheme = () => {
-    setTheme(themeMode === 'light' ? 'dark' : 'light');
-  };
-
-  const themeContextValue = {
-    theme,
-    togleTheme,
-  };
-
   return (
-    <ThemeProvider value={themeContextValue}>
       <NavigationContainer>
         <Stack.Navigator >
           {/* Defina a rota para a tela de teste */}
-          <Stack.Screen name='MyTest' component={MyTest}/>
           <Stack.Screen name="Intro" component={IntroScreen} />
+          <Stack.Screen name='MyTest' component={MyTest}/>
           <Stack.Screen name="PresentationOne" component={PresentationScreenOne} />
           <Stack.Screen name="PresentationTwo" component={PresentationScreenTwo} />
           <Stack.Screen name="Login" component={LoginScreen} />
@@ -85,7 +73,5 @@ export default function App() {
             }}/>
         </Stack.Navigator>
       </NavigationContainer>
-    </ThemeProvider>
-
   );
 }
