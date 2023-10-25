@@ -1,10 +1,8 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Dimensions, Image} from 'react-native';
 import { NavigationContainer, ThemeProvider } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
-
-
 import IntroScreen from './screens/introScreen'; 
 import PresentationScreenOne from './screens/presentationScreenOne'; 
 import PresentationScreenTwo from './screens/presentationScreenTwo';
@@ -15,16 +13,12 @@ import PasswordRegister from './screens/passwordRegisterScreen';
 import ResetPassword from './screens/passwordRecoveryScreen';
 import GeneratePin from './screens/generatePinScreen';
 import ValidatePin from './screens/validatePinScreen';
-import Config from './screens/configTabScreen';
 import Profile from './screens/profileTabScreen';
 import AboutUs from './screens/aboutUsTabScreen';
 import MyTest from './screens/MyTestScreen';
 
 import profileIcon from './assets/profileIcon.png';
-import brushIcon from './assets/brushIcon.png';
 import aboutUsIcon from './assets/awardIcon.png';
-
-import { themeProvider } from './context/theme';
 
 const Stack = createStackNavigator();
 const Tab = createMaterialTopTabNavigator();
@@ -35,8 +29,6 @@ const iconSelector = (route) => {
       return <Image source={profileIcon} style={{width: 25, height: 25}}/>;
     case 'About Us':
       return <Image source={aboutUsIcon} style={{width: 27, height: 30}}/>;
-    case 'Config':
-      return <Image source={brushIcon} style={{width: 25, height: 35}}/>;
   }
 };
 
@@ -55,15 +47,25 @@ function ConfigTab() {
       }}
     >
       <Tab.Screen name="Profile" component={Profile}/>
-      <Tab.Screen name="Config" component={Config} />
       <Tab.Screen name="About Us" component={AboutUs} />
     </Tab.Navigator>
   );
 };
 
 export default function App() {
+  const [theme, setTheme] = useState('light');
+
+  const togleTheme = () => {
+    setTheme(themeMode === 'light' ? 'dark' : 'light');
+  };
+
+  const themeContextValue = {
+    theme,
+    togleTheme,
+  };
+
   return (
-    <ThemeProvider>
+    <ThemeProvider value={themeContextValue}>
       <NavigationContainer>
         <Stack.Navigator >
           {/* Defina a rota para a tela de teste */}
@@ -84,5 +86,6 @@ export default function App() {
         </Stack.Navigator>
       </NavigationContainer>
     </ThemeProvider>
+
   );
 }
