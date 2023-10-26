@@ -37,17 +37,6 @@ const accessToApp = {
             return "Problema ao fazer login. Tente novamente"
         }
     },
-    signUp: async (form) => {
-        const baseURL = 'https://vance-drab.vercel.app/api/signup'
-        try {
-            const response = await axios.post(baseURL, form);
-
-
-        }
-        catch (e) {
-            console.log(e)
-        }
-    },
 
     generatePin: async (email) => {
         const baseURL = `https://vance-drab.vercel.app/api/forgot-password/${email}/code/`;
