@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, Image, Dimensions, TouchableOpacity, TextInput} from 'react-native';
+import { View, Text, Image, Dimensions, TouchableOpacity, TextInput, Modal} from 'react-native';
 import { StyleSheet } from 'react-native';
 import arrowBack from '../assets/backArrow.png';
 import eyeOpened from '../assets/openEyeIcon.png';
@@ -9,12 +9,22 @@ const windowWidth = Dimensions.get('window').width;
 2
 export default function MyTestScreen({ navigation }) {
     useEffect(() => {
-        navigation.setOptions({
-          headerShown: false, // Esta opção oculta o cabeçalho da tela
-        });
-      }, []);
-
+            navigation.setOptions({
+                headerShown: false, // Esta opção oculta o cabeçalho da tela
+            });
+        }, []);
+    
+    const [cancelView, setCancelView] = useState(false);
     const [eyeOpen, setEyeOpen] = useState(true);
+
+    const handleDeleteCancel = () => {
+            setCancelView(false);
+    };
+
+    const handleDeleteConfirm = () => {
+            setCancelView(false);
+            navigation.navigate('Intro');
+    };
 
   return (
     <View style={styles.container}>
@@ -25,7 +35,7 @@ export default function MyTestScreen({ navigation }) {
                 </TouchableOpacity>
             </View>
             <View style={styles.cancelView}>
-                <Text style={styles.linkText} onPress={() => navigation.navigate('Intro')}>
+                <Text style={styles.linkText} onPress={() => setCancelView(true)}>
                     Cancelar
                 </Text>
             </View> 
@@ -61,7 +71,31 @@ export default function MyTestScreen({ navigation }) {
               <Text style={styles.buttonText}>Continuar</Text>    
             </TouchableOpacity>
         </View>
+        <Modal
+            animationType="slide"
+            transparent={true}
+            visible={cancelView}
+            onRequestClose={() => {
+                setCancelView(false);
+            }}
+            >
+            <View style={styles.modalContainer}>
+                <View style={styles.modalContent}>
+                <Text style={styles.modalText}>Tem certeza?</Text>
+                <Text style={styles.modalText}>Ao confirmar, a assão não poderá ser desfeita, apenas refeita</Text>
+                <View style={styles.modalButtonsContainer}>
+                    <TouchableOpacity style={styles.modalButtonNo} onPress={() => handleDeleteCancel()}>
+                        <Text style={styles.modalButtonTextNo}>Não, continuar</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity style={styles.modalButtonYes} onPress={() => handleDeleteConfirm()}>
+                        <Text style={styles.modalButtonTextYes}>Sim, cancelar</Text>
+                    </TouchableOpacity>
+                </View> 
+                </View>
+            </View>
+        </Modal>
     </View>
+
   );
 }
 
@@ -158,4 +192,55 @@ const styles = StyleSheet.create({
         fontSize: 20,
         textAlign: 'center',
     },
+    modalContainer: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+      },
+      modalContent: {
+        backgroundColor: 'white',
+        borderRadius: 10,
+        padding: 20,
+        alignItems: 'center',
+        borderWidth: 1,
+      },
+      modalText: {
+        fontSize: 18,
+        fontWeight: 'bold',
+        marginBottom: 20,
+      },
+      modalButtonsContainer: {
+        flexDirection: 'row',
+        justifyContent: 'center',
+        alignItems: 'center',
+        width: windowWidth*0.7,
+      },
+      modalButtonYes: {
+        backgroundColor: 'red',
+        borderRadius: 10,
+        paddingVertical: 10,
+        paddingHorizontal: 20,
+        marginHorizontal: 10,
+        borderWidth: 1,
+      },
+      modalButtonNo: {
+        backgroundColor: 'white',
+        borderRadius: 10,
+        paddingVertical: 10,
+        paddingHorizontal: 20,
+        marginHorizontal: 10,
+        borderWidth: 1,
+      },
+      modalButtonTextYes: {
+        color: 'white',
+        fontWeight: 'bold',
+        fontSize: 16,
+        textAlign: 'center',
+      },
+      modalButtonTextNo: {
+        color: 'red',
+        fontWeight: 'bold',
+        fontSize: 16,
+        textAlign: 'center',
+      },
 });

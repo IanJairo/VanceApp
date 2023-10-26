@@ -20,9 +20,11 @@ export default function EditNote({ navigation }) {
     const [favorite, setFavorite] = useState(false);
     const [date, setDate] = useState('');
     const [title, setTitle] = useState('');
+    const [modalEmail, setModalEmail] = useState('');
     const [deletModalVisible, setDeletModalVisible] = useState(false);
     const [sharedModalVisible, setSharedModalVisible] = useState(false);
-    const [toShareModalVisible, setToShareModalVisible] = useState(false);
+    const [addModalVisible, setAddModalVisible] = useState(false);
+    const [isSelected, setSelected] = useState(false);
 
     const [descHTML, setDescHTML] = useState('');
     const [showDescError, setShowDescError] = useState(false);
@@ -30,7 +32,6 @@ export default function EditNote({ navigation }) {
       {name: 'Péricles', email: 'pericles@vance.com', foto: testIcon, permissao: 'true'},
       {name: 'Ian', email: 'ian@vance.com', foto: testIcon, permissao: 'true'},
       {name: 'Joao', email: 'joao@vance.com', foto: testIcon, permissao: 'false'},
-
     ]);
 
     useEffect(() => {
@@ -62,6 +63,16 @@ export default function EditNote({ navigation }) {
     const handleShareNote = () => {
       setSharedModalVisible(!sharedModalVisible);
     };
+
+    const callAddModal = () => {
+      setSharedModalVisible(false);
+      setAddModalVisible(true);
+    }
+
+    const callSharedModal = () => {
+      setAddModalVisible(false);
+      setSharedModalVisible(true);
+    }
 
 
     const richTextHandle = (descriptionText) => {
@@ -185,37 +196,91 @@ export default function EditNote({ navigation }) {
           setSharedModalVisible(false);
       }}
       >
-        <View style={styles.shareModalContainer}>
-          <View style={styles.modalContent}>
-            <View style={styles.shareHeader}>
-              <TouchableOpacity style={{}} onPress={() => handleShareNote()}><Image source={backArrow} style={styles.image}/></TouchableOpacity>
-              <TouchableOpacity style={{}} onPress={() => handleChangeMoral()}><Text style={styles.linkText}>Adicionar</Text></TouchableOpacity>
-            </View>
-            <Text style={styles.h1}>Pessoas com acesso</Text>
-            <View style={styles.shareBody}>
-              <FlatList
-                data={sharedUsers}
-                renderItem={({item}) => (
-                  <View style={{ flexDirection: 'row', marginBottom: 15, alignItems: 'center', justifyContent: 'center'}}> 
-                    <Image source={item.foto} style={styles.image}/>
-                    <View style={{ flexDirection: 'column', marginRight: 10, width: windowWidth*0.4}}>
-                      <Text style={styles.h2}>{item.name}</Text>
-                      <Text style={styles.h3}>{item.email}</Text>
-                    </View>
-                    <View>
-                      <View style={{ flexDirection: 'row' }}>
-                        <TouchableOpacity style={{ height: 15, width: 15,marginLeft: 10,marginRight:5, borderRadius: 5, backgroundColor: item.permissao==='true' ? '#00c0ce' : '#7a7a7a' }}></TouchableOpacity>
-                        <Text style={styles.linkText1}>Editor</Text>
+        <View style={styles.modalContainer}>
+            <View style={styles.modalContent}>
+              <View style={styles.shareHeader}>
+                <TouchableOpacity style={{}} onPress={() => handleShareNote()}><Image source={backArrow} style={styles.image}/></TouchableOpacity>
+                <TouchableOpacity style={{}} onPress={() => callAddModal()}><Text style={styles.linkText}>Adicionar</Text></TouchableOpacity>
+              </View>
+              <Text style={styles.h1}>Pessoas com acesso</Text>
+              <View style={styles.shareBody}>
+                <FlatList
+                  data={sharedUsers}
+                    renderItem={({item}) => (
+                      <View style={{ flexDirection: 'row', marginBottom: 15, alignItems: 'center', justifyContent: 'center'}}> 
+                        <Image source={item.foto} style={styles.image}/>
+                        <View style={{ flexDirection: 'column', marginRight: 10, width: windowWidth*0.4}}>
+                          <Text style={styles.h2}>{item.name}</Text>
+                          <Text style={styles.h3}>{item.email}</Text>
+                        </View>
+                        <View>
+                          <View style={{ flexDirection: 'row' }}>
+                            <TouchableOpacity onPress={() => {if(item.permissao==='true'){item.permissao='false'}else{item.permissao='true'}}} style={{ height: 15, width: 15,marginLeft: 10,marginRight:5, borderRadius: 5, backgroundColor: item.permissao==='true' ? '#00c0ce' : '#7a7a7a' }}></TouchableOpacity>
+                            <Text style={styles.linkText1}>Editor</Text>
+                          </View>
+                        </View>
                       </View>
-                    </View>
-                  </View>
-              )}
-              keyExtractor={item => item.email}
-              style={{ hidth: windowWidth*0.9, maxHeight: '90%', }}
-            />
+                  )}
+                keyExtractor={item => item.email}
+                style={{ hidth: windowWidth*0.9, maxHeight: '90%', }}
+              />
+              </View>
             </View>
-          </View>
         </View>
+      </Modal>
+
+      <Modal
+        animationType="slide"
+        transparent={true}
+        visible={addModalVisible}
+        onRequestClose={() => {
+            setAddModalVisible(false);
+        }}
+        >
+          <View style={styles.modalContainer}>
+              <View style={styles.modalContent}>
+                <View style={styles.shareHeader}>
+                  <TouchableOpacity style={{}} onPress={() => callSharedModal()}><Image source={backArrow} style={styles.image}/></TouchableOpacity>
+                  <TouchableOpacity style={{}} onPress={() => setAddModalVisible(false)}><Text style={styles.linkText}>Done</Text></TouchableOpacity>
+                </View>
+                <Text style={styles.h1}>Adicionar Pessoas</Text>
+                <Text style={styles.h3}>Digite o email da pessoa que deseja adicionar</Text>
+                <TextInput
+                  placeholder="Email"
+                  style={{ fontSize: 20, fontWeight: "600", color: "lightgray", width: '100%', borderWidth: 1, borderColor: '#7a7a7a', borderRadius: 10, padding: 10, margin: 20 }}
+                  onChangeText={setModalEmail}
+                  value={modalEmail}
+                />
+                <FlatList
+                  data={sharedUsers}
+                  renderItem={({item}) => {
+                    if (item.email === modalEmail) {
+                      return (
+                        <View style={{ flexDirection: 'row', marginBottom: 15, alignItems: 'center', justifyContent: 'center'}}> 
+                          <Image source={item.foto} style={styles.image}/>
+                          <View style={{ flexDirection: 'column', marginRight: 10, width: windowWidth*0.4}}>
+                            <Text style={styles.h2}>{item.name}</Text>
+                            <Text style={styles.h3}>{item.email}</Text>
+                          </View>
+                          <View>
+                            <View style={{ flexDirection: 'row' }}>
+                              <TouchableOpacity 
+                                onPress={() => {if(item.permissao==='true'){item.permissao='false'}else{item.permissao='true'}}}
+                                style={{ height: 15, width: 15,marginLeft: 10,marginRight:5, borderRadius: 5, backgroundColor: item.permissao==='true' ? '#00c0ce' : '#7a7a7a' }}></TouchableOpacity>
+                              <Text style={styles.linkText1}>Editor</Text>
+                            </View>
+                          </View>
+                        </View>
+                      );
+                    } else {
+                      return null;
+                    }
+                  }}
+                keyExtractor={item => item.email}
+                style={{ hidth: windowWidth*0.9, maxHeight: '90%', }}
+              />
+              </View>  
+          </View>
       </Modal>
     </SafeAreaView>
   );
@@ -375,5 +440,11 @@ const styles = StyleSheet.create({
   h3: {
     fontSize: 14,
     color: '#7a7a7a',
+  },
+  linkText: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    color: '#00c0ce',
+    marginBottom: 20,
   },
 });
