@@ -1,6 +1,5 @@
 import axios from 'axios';
-import { AsyncStorage } from 'react-native';
-
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const accessToApp = {
     login: async (email, password) => {
@@ -9,17 +8,16 @@ const accessToApp = {
 
         try {
             const response = await axios.post(baseURL, credentials);
-            console.log(response.data);
-            // navigation.navigate(''); // Aqui vai o nome da próxima tela
-            
-            if (response.error !== '') {
+
+            if (response.data.error === null || response.data.error === '') {
                 await AsyncStorage.setItem('user', JSON.stringify(response.data));
-                return {message: response.message, sucess: true};
+                return {message: response.data.data.message, sucess: true};
             } else {
-                return {message: response.message, sucess: false};
+                return {message: response.data.error, sucess: false};
             }   
 
         } catch (error) {
+            console.log(error);
             return "Problema ao fazer login. Tente novamente"
         }
     },
@@ -34,9 +32,27 @@ const accessToApp = {
             console.log(e)
         }
     },
-    loginWithFacebook: function () {
-        // código para fazer login com o Facebook
-    },
+
+    generateCode: async (email) => {
+        email = email.toLowerCase();
+        const baseURL = `https://vance-drab.vercel.app/api/forgot-passord/${email}/code`;
+        try {
+            const response = await axios.post(baseURL, email);
+            
+            if (response.error != null || response.error !== '') {
+                return {message: response.message, sucess: true};
+        
+        
+            }
+        }
+
+
+
+
+        catch (e){
+            console.log(e)
+        }
+    }
 };
 
 export default accessToApp;

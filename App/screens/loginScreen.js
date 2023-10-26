@@ -1,5 +1,5 @@
-import React, { useEffect, useState, Alert } from 'react';
-import { View, Text, Image, Dimensions, TouchableOpacity, TextInput } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { View, Text, Image, Dimensions, TouchableOpacity, TextInput, Alert } from 'react-native';
 import { StyleSheet } from 'react-native';
 import eyeOpened from '../assets/openEyeIcon.png'
 import eyeClosed from '../assets/closedEyeIcon.png'
@@ -34,6 +34,14 @@ export default function LoginScreen({ navigation }) {
         }
 
         const result = await accessToApp.login(email, password)
+
+        if (!result.sucess) {
+            Alert.alert('Erro', result.message);
+            return;
+        }
+
+        // aqui coloca a rota
+        console.log(result)
     }
 
     return (
