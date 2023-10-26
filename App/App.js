@@ -8,7 +8,7 @@ import PresentationScreenOne from './screens/presentationScreenOne';
 import PresentationScreenTwo from './screens/presentationScreenTwo';
 import LoginScreen from './screens/loginScreen';
 import EmailRegister from './screens/emailRegisterScreen';
-import NomeRegister from './screens/nameRegisterScreen';
+import NameRegister from './screens/nameRegisterScreen';
 import PasswordRegister from './screens/passwordRegisterScreen';
 import ResetPassword from './screens/passwordRecoveryScreen';
 import GeneratePin from './screens/generatePinScreen';
@@ -63,10 +63,10 @@ export default function App() {
           <Stack.Screen name="PresentationOne" component={PresentationScreenOne} />
           <Stack.Screen name="PresentationTwo" component={PresentationScreenTwo} />
           <Stack.Screen name="EmailRegister" component={EmailRegister} />
-          <Stack.Screen name="NomeRegister" component={NomeRegister} />
-          <Stack.Screen name="SenhaRegister" component={PasswordRegister} />
           <Stack.Screen name="Home" component={HomeScreen} />
           <Stack.Screen name="EditNote" component={EditNote} />
+          <Stack.Screen name="NameRegister" component={NameRegister} />
+          <Stack.Screen name="PasswordRegister" component={PasswordRegister} />
           <Stack.Screen name='GeneratePin' component={GeneratePin} />
           <Stack.Screen name='ValidatePin' component={ValidatePin} />
           <Stack.Screen name="ResetPassword" component={ResetPassword} />
