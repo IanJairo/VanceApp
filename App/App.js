@@ -15,7 +15,6 @@ import GeneratePin from './screens/generatePinScreen';
 import ValidatePin from './screens/validatePinScreen';
 import Profile from './screens/profileTabScreen';
 import AboutUs from './screens/aboutUsTabScreen';
-import MyTest from './screens/MyTestScreen';
 import HomeScreen from './screens/home';
 import EditNote from './screens/editNoteScreen';
 
@@ -38,14 +37,14 @@ function ConfigTab() {
 
   return (
     <Tab.Navigator
-      screenOptions={ ({route}) => ({ tabBarIcon: () => iconSelector(route)})}
+      screenOptions={({route}) => ({ tabBarIcon: () => iconSelector(route)})}
       tabBarOptions={{
         showLabel: false,
         style: {
           borderTopColor: 'red',
-          elevatiopn: 1,
+          elevation: 1,
           height: 60,
-        },
+        }
       }}
     >
       <Tab.Screen name="Profile" component={Profile}/>
@@ -59,19 +58,18 @@ export default function App() {
       <NavigationContainer>
         <Stack.Navigator >
           {/* Defina a rota para a tela de teste */}
-          <Stack.Screen name="Home" component={HomeScreen} />
           <Stack.Screen name="Intro" component={IntroScreen} />
-          <Stack.Screen name='MyTest' component={MyTest}/>
-          <Stack.Screen name="EditNote" component={EditNote} />
+          <Stack.Screen name="Login" component={LoginScreen} />
           <Stack.Screen name="PresentationOne" component={PresentationScreenOne} />
           <Stack.Screen name="PresentationTwo" component={PresentationScreenTwo} />
-          <Stack.Screen name="Login" component={LoginScreen} />
           <Stack.Screen name="EmailRegister" component={EmailRegister} />
           <Stack.Screen name="NomeRegister" component={NomeRegister} />
           <Stack.Screen name="SenhaRegister" component={PasswordRegister} />
-          <Stack.Screen name="ResetPassword" component={ResetPassword} />
+          <Stack.Screen name="Home" component={HomeScreen} />
+          <Stack.Screen name="EditNote" component={EditNote} />
           <Stack.Screen name='GeneratePin' component={GeneratePin} />
           <Stack.Screen name='ValidatePin' component={ValidatePin} />
+          <Stack.Screen name="ResetPassword" component={ResetPassword} />
           <Stack.Screen name='ConfigTab' component={ConfigTab} options={{
             headerTitle: '',
             }}/>
