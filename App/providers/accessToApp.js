@@ -11,10 +11,10 @@ const accessToApp = {
 
             if (response.data.error === null || response.data.error === '') {
                 await AsyncStorage.setItem('user', JSON.stringify(response.data));
-                return {message: response.data.data.message, sucess: true};
+                return { message: response.data.data.message, sucess: true };
             } else {
-                return {message: response.data.error, sucess: false};
-            }   
+                return { message: response.data.error, sucess: false };
+            }
 
         } catch (error) {
             console.log(error);
@@ -26,32 +26,66 @@ const accessToApp = {
         try {
             const response = await axios.post(baseURL, form);
 
-  
+
         }
-        catch (e){
+        catch (e) {
             console.log(e)
         }
     },
 
-    generateCode: async (email) => {
-        email = email.toLowerCase();
-        const baseURL = `https://vance-drab.vercel.app/api/forgot-passord/${email}/code`;
+    generatePin: async (email) => {
+        const baseURL = `https://vance-drab.vercel.app/api/forgot-password/${email}/code/`;
         try {
-            const response = await axios.post(baseURL, email);
-            
-            if (response.error != null || response.error !== '') {
-                return {message: response.message, sucess: true};
-        
-        
+            const response = await axios.get(baseURL);
+
+            if (response.data.error === null || response.data.error === '') {
+                return { message: response.data.message, sucess: true };
+            } else {
+                return { message: response.data.message, sucess: false };
             }
         }
-
-
-
-
-        catch (e){
-            console.log(e)
+        catch (error) {
+            console.log(error);
+            return {message: "Problema ao gerar o Pin. Tente novamente", sucess: false}
         }
+    },
+
+    validatePin: async (obj) => { 
+        const baseURL = 'https://vance-drab.vercel.app/api/validate-pin/'
+
+        console.log(obj)
+        try {
+            const response = await axios.post(baseURL, obj);
+            console.log(response.data)
+            if (response.data.error === null || response.data.error === '') {
+                return { message: response.data.message, sucess: true };
+            } else {
+                return { message: response.data.message, sucess: false };
+            }
+        } catch (error) {
+            console.log(error);
+            return {message: "Problema ao validar o Pin. Tente novamente", sucess: false}
+        }
+    },
+
+    
+    creatNewPassword: async (obj) => {
+        const baseURL = 'https://vance-drab.vercel.app/api/reset-password/'
+
+        console.log(obj)
+        try {
+            const response = await axios.post(baseURL, obj);
+
+            if (response.data.error === null || response.data.error === '') {
+                return { message: response.data.message, sucess: true };
+            } else {
+                return { message: response.data.message, sucess: false };
+            }
+        } catch (error) {
+            console.log(error);
+            return {message: "Problema ao criar nova senha. Tente novamente", sucess: false}
+        }
+
     }
 };
 

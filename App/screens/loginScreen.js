@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, Image, Dimensions, TouchableOpacity, TextInput, Alert } from 'react-native';
+import { View, Text, Image, Dimensions, TouchableOpacity, TextInput, Alert, KeyboardAvoidingView } from 'react-native';
 import { StyleSheet } from 'react-native';
 import eyeOpened from '../assets/openEyeIcon.png'
 import eyeClosed from '../assets/closedEyeIcon.png'
@@ -46,37 +46,40 @@ export default function LoginScreen({ navigation }) {
 
     return (
         <View style={styles.container}>
-            <View style={styles.arrowView}>
-                <TouchableOpacity onPress={() => navigation.navigate('Intro')}>
-                    <Image style={styles.arrowImage} source={arrowImage} />
-                </TouchableOpacity>
-            </View>
-            <View style={styles.formView}>
-                <View style={styles.titleView}>
-                    <Text style={styles.Title}>Bem-vindo de volta!</Text>
-                </View>
-                <View style={styles.inputView}>
-                    <Text style={styles.Text}>Digite seu Email</Text>
-                    <TextInput onChangeText={setEmail} value={email} style={styles.input} placeholder="email@vance.com" />
-                </View>
-                <View style={styles.inputView}>
-                    <Text style={styles.Text}>Digite sua senha</Text>
-                    <View style={styles.passwordSection}>
-                        <TextInput onChangeText={setPassword} value={password} style={styles.input} placeholder="**********" />
-                        <TouchableOpacity onPress={() => setEyeOpen(!eyeOpen)}>
-                            <Image style={styles.eyeImage}
-                                source={eyeOpen ? eyeOpened : eyeClosed} />
-                        </TouchableOpacity>
-                    </View>
+            <KeyboardAvoidingView behavior={Platform.OS === "ios" ? "padding" : "height"} style={styles.container}>
 
-                    <Text style={styles.recoverPassword} onPress={() => navigation.navigate('GeneratePin')}>Recuperar a senha</Text>
+                <View style={styles.arrowView}>
+                    <TouchableOpacity onPress={() => navigation.navigate('Intro')}>
+                        <Image style={styles.arrowImage} source={arrowImage} />
+                    </TouchableOpacity>
                 </View>
-            </View>
-            <View style={styles.buttonView}>
-                <TouchableOpacity style={styles.button} onPress={() => login(email, password)}>
-                    <Text style={styles.buttonText}>Continuar</Text>
-                </TouchableOpacity>
-            </View>
+                <View style={styles.formView}>
+                    <View style={styles.titleView}>
+                        <Text style={styles.Title}>Bem-vindo de volta!</Text>
+                    </View>
+                    <View style={styles.inputView}>
+                        <Text style={styles.Text}>Digite seu Email</Text>
+                        <TextInput onChangeText={setEmail} value={email} style={styles.input} placeholder="email@vance.com" />
+                    </View>
+                    <View style={styles.inputView}>
+                        <Text style={styles.Text}>Digite sua senha</Text>
+                        <View style={styles.passwordSection}>
+                            <TextInput onChangeText={setPassword} value={password} style={styles.input} placeholder="**********" />
+                            <TouchableOpacity onPress={() => setEyeOpen(!eyeOpen)}>
+                                <Image style={styles.eyeImage}
+                                    source={eyeOpen ? eyeOpened : eyeClosed} />
+                            </TouchableOpacity>
+                        </View>
+
+                        <Text style={styles.recoverPassword} onPress={() => navigation.navigate('GeneratePin')}>Recuperar a senha</Text>
+                    </View>
+                </View>
+                <View style={styles.buttonView}>
+                    <TouchableOpacity style={styles.button} onPress={() => login(email, password)}>
+                        <Text style={styles.buttonText}>Continuar</Text>
+                    </TouchableOpacity>
+                </View>
+            </KeyboardAvoidingView>
         </View>
     );
 }
