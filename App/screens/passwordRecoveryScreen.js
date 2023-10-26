@@ -67,7 +67,7 @@ export default function ResetPassword({ navigation, route }) {
                     <View style={styles.inputView}>
                         <Text style={[styles.linkText, { right: 0, left: 20 }]}>Digite sua senha</Text>
                         <View style={styles.passwordSection}>
-                            <TextInput style={styles.input} onChangeText={setPassword} value={password} placeholder="**********" />
+                            <TextInput style={styles.input} secureTextEntry={eyeOpen} onChangeText={setPassword} value={password} placeholder="**********" />
                             <TouchableOpacity onPress={() => setEyeOpen(!eyeOpen)}>
                                 <Image style={styles.eyeImage}
                                     source={eyeOpen ? eyeOpened : eyeClosed} />
@@ -75,7 +75,7 @@ export default function ResetPassword({ navigation, route }) {
                         </View>
                         <Text style={[styles.linkText, { right: 0, left: 20 }]} >Repita sua senha</Text>
                         <View style={styles.passwordSection}>
-                            <TextInput style={styles.input} onChangeText={setVerifyPassword} value={verifyPassword} placeholder="**********" />
+                            <TextInput style={styles.input} secureTextEntry={eyeOpen} onChangeText={setVerifyPassword} value={verifyPassword} placeholder="**********" />
                             <TouchableOpacity onPress={() => setEyeOpen(!eyeOpen)}>
                                 <Image style={styles.eyeImage}
                                     source={eyeOpen ? eyeOpened : eyeClosed} />

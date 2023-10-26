@@ -64,7 +64,7 @@ export default function LoginScreen({ navigation }) {
                     <View style={styles.inputView}>
                         <Text style={styles.Text}>Digite sua senha</Text>
                         <View style={styles.passwordSection}>
-                            <TextInput onChangeText={setPassword} value={password} style={styles.input} placeholder="**********" />
+                            <TextInput onChangeText={setPassword}  secureTextEntry={eyeOpen} value={password} style={styles.input} placeholder="**********" />
                             <TouchableOpacity onPress={() => setEyeOpen(!eyeOpen)}>
                                 <Image style={styles.eyeImage}
                                     source={eyeOpen ? eyeOpened : eyeClosed} />
