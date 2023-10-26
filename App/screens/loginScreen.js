@@ -42,6 +42,7 @@ export default function LoginScreen({ navigation }) {
 
         // aqui coloca a rota
         console.log(result)
+        navigation.navigate('Home')
     }
 
     return (
