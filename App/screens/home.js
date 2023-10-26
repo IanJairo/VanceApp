@@ -1,15 +1,14 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, Image, Dimensions, TouchableOpacity, ScrollView, AsyncStorage} from 'react-native';
+import { View, Text, Image, Dimensions, TouchableOpacity, ScrollView, AsyncStorage, FlatList} from 'react-native';
 import { StyleSheet } from 'react-native';
 import { FAB } from 'react-native-paper';
 import RenderHTML from 'react-native-render-html';
-
 
 import profileIcon from '../assets/neyDayFlamengo.png'
 import underline from '../assets/underline.png'
 
 const windowWidth = Dimensions.get('window').width;
-
+const windowHeight = Dimensions.get('window').height;
 
 export default function HomeScreen({ navigation }) {
     useEffect(() => {
@@ -18,14 +17,28 @@ export default function HomeScreen({ navigation }) {
             });
         }, []);
 
-      const [selectedButtonIndex, setSelectedButtonIndex] = useState(0);
-      const [isSelected, setSelection] = useState(false);
-      
-      const handleButtonPress = (index) => {
-          setSelectedButtonIndex(index);
+    const [selectedButtonIndex, setSelectedButtonIndex] = useState(0);
+    const [isSelected, setSelection] = useState(false);
+    const [notes, setNotes] = useState([
+    {title: 'TITULO', date: '26/10/2023', content: '<p>hello world</p>'},
+    {title: 'TITULO1', date: '26/10/2023', content: '<p>ola mundo</p>'},
+    {title: 'TITULO2', date: '26/10/2023', content: '<p>ohio gusai matsy</p>'},
+    {title: 'TITULO3', date: '26/10/2023', content: '<p>hello world2</p>'},
+    {title: 'TITULO4', date: '26/10/2023', content: '<p>ola mundo2</p>'},
+    {title: 'TITULO5', date: '26/10/2023', content: '<p>ohio gusai matsy2</p>'},
+    {title: 'TITULO6', date: '26/10/2023', content: '<p>hello world3</p>'},
+    {title: 'TITULO7', date: '26/10/2023', content: '<p>ola mundo3</p>'},
+    {title: 'TITULO8', date: '26/10/2023', content: '<p>ohio gusai matsy3</p>'},
+    {title: 'TITULO9', date: '26/10/2023', content: '<p>hello world4</p>'},
+    {title: 'TITULO10', date: '26/10/2023', content: '<p>ola mundo4</p>'},
+    {title: 'TITULO11', date: '26/10/2023', content: '<p>ohio gusai matsy4</p>'},
+    ]); // [ {title: 'TITULO', date: 'data', content: 'conteudo'}, ...
+    
+    const handleButtonPress = (index) => {
+        setSelectedButtonIndex(index);
         };
-      
-      const renderButton = (value, index) => {
+
+    const renderButton = (value, index) => {
           const isSelected = selectedButtonIndex === index;
           return (
             <TouchableOpacity
@@ -76,13 +89,13 @@ export default function HomeScreen({ navigation }) {
 
   return (
     <View style={styles.container}>
-        <View style={styles.profileView}>
+        <TouchableOpacity style={styles.profileView} onPress={() => navigation.navigate('ConfigTab')}>
             <Image style={styles.image} source={profileIcon}/>
             <View style={styles.nameView}>
                 <Text style={styles.nameText}>Neymar Jr</Text>
                 <Text style={styles.profileText}>Perfil</Text>
             </View>
-        </View>
+        </TouchableOpacity>
         <View style={styles.statisticView}>
             {[5,2,2].map((value, index) => renderButton(value, index))}
         </View>
@@ -90,18 +103,38 @@ export default function HomeScreen({ navigation }) {
             {["Notas","Favoritas","Compartilhadas"].map((value, index) => renderTextButton(value, index))}
         </View>
         <View style={styles.notesViews}>
-            {/* <RenderHTML
-                contentWidth={windowWidth*0.9}
-                source={htmlContent}
-            /> */}
+            <FlatList
+                data={notes}
+                renderItem={({ item }) => (
+                    <TouchableOpacity style={{
+                            padding: 20,  
+                            marginVertical: 5, 
+                            borderRadius: 15,
+                            backgroundColor: '#f5f5f5',
+                            borderColor: '#DBF7F9',
+                            borderWidth: 1,
+                         }} 
+                         onPress={( null )}>
+                        <Text style={{fontWeight: 'bold', fontSize: 18}}>{item.title}</Text>
+                        <RenderHTML
+                            contentWidth={windowWidth*0.9}
+                            source={{ html: item.content }}
+                        />
+                        <Text style={{fontSize: 13, color: '#9e9e9e'}}>{item.date}</Text>
+                    </TouchableOpacity>
+                )}
+                keyExtractor={item => item.title}
+                style={{ maxHeight: '100%', width: windowWidth*0.9}}
+            />
         </View>
         <FAB
             icon="plus"
             style={styles.fab}
-            onPress={() => console.log('Pressed')}
+            onPress={() => navigation.navigate('EditNote')}
             backgroundColor='red'
         />
     </View>
+
   );
 }
 
@@ -147,6 +180,12 @@ const styles = StyleSheet.create({
         width: windowWidth,
         height: '18%',
     },
+    notesViews: {
+        width: windowWidth*0.9,
+        height: '50%',
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
     fab: {
         position: 'absolute',
         width: 60,
@@ -158,10 +197,10 @@ const styles = StyleSheet.create({
         bottom: 0,
         backgroundColor: 'red',
       },
-      image: {
+    image: {
         width: 50,
         height: 50,
         borderRadius: 50,
         marginLeft: 10,
-      }
+    }
 });
