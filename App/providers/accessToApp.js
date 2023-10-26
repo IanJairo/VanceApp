@@ -2,6 +2,22 @@ import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const accessToApp = {
+    signUp: async (form) => {
+        const baseURL = "https://vance-drab.vercel.app/api/signup"
+        try {
+            const response = await axios.post(baseURL, form);
+            console.log(response.data)
+            if (response.data.error === null || response.data.error === '') {
+                return { message: response.data.message, sucess: true };
+            } else {
+                return { message: response.data.message, sucess: false };
+            }
+        } catch (e) {
+            console.log(e)
+            return { message: "Problema ao criar conta. Tente novamente", sucess: false }
+        }
+
+    },
     login: async (email, password) => {
         const credentials = { email, password };
         const baseURL = 'https://vance-drab.vercel.app/api/login';
