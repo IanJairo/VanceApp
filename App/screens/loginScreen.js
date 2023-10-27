@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, Image, Dimensions, TouchableOpacity, TextInput, Alert, KeyboardAvoidingView } from 'react-native';
-import { StyleSheet } from 'react-native';
+import { useColorScheme, StyleSheet, View, Text, Image, Dimensions, TouchableOpacity, TextInput, Alert, KeyboardAvoidingView } from 'react-native';
 import eyeOpened from '../assets/openEyeIcon.png'
 import eyeClosed from '../assets/closedEyeIcon.png'
 import arrowImage from '../assets/backArrow.png'
@@ -10,6 +9,7 @@ const windowsHeight = Dimensions.get('window').height;
 
 import axios from 'axios';
 import accessToApp from '../providers/accessToApp';
+
 export default function LoginScreen({ navigation }) {
     useEffect(() => {
         navigation.setOptions({
@@ -92,7 +92,7 @@ const styles = StyleSheet.create({
         height: windowsHeight,
         alignItems: 'center',
         justifyContent: 'center',
-        backgroundColor: '#fff',
+        backgroundColor: 'white',
     },
     arrowView: {
         width: windowWidth,
@@ -110,14 +110,12 @@ const styles = StyleSheet.create({
         height: '60%',
         alignItems: 'flex-start',
         justifyContent: 'center',
-        backgroundColor: '#fff',
     },
     titleView: {
         width: windowWidth,
         marginBottom: 15,
         alignItems: 'flex-start',
         justifyContent: 'center',
-        backgroundColor: '#fff',
     },
     Title: {
         fontSize: 25,
@@ -134,8 +132,9 @@ const styles = StyleSheet.create({
         width: windowWidth * 0.85,
         height: 40,
         marginLeft: 20,
-        color: '#C2BDBC',
+        borderBottomWidth: 1,
     },
+
     recoverPassword: {
         width: windowWidth * 0.85,
         height: '20%',

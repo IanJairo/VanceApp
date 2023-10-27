@@ -1,6 +1,5 @@
-import React, { useEffect } from 'react';
-import { View, Text, Image, Dimensions, TouchableOpacity } from 'react-native';
-import { StyleSheet } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { View, Text, Image, Dimensions, TouchableOpacity, StyleSheet } from 'react-native';
 import vanceLogo from '../assets/logo.png';
 
 const windowWidth = Dimensions.get('window').width;
@@ -8,28 +7,28 @@ const windowWidth = Dimensions.get('window').width;
 export default function IntroScreen({ navigation }) {
     useEffect(() => {
         navigation.setOptions({
-          headerShown: false, // Esta opção oculta o cabeçalho da tela
+            headerShown: false, // Esta opção oculta o cabeçalho da tela
         });
-      }, []);
+    }, []);
 
-  return (
-    <View style={styles.container}>
-        <View style={styles.imageView}>
-            <Image 
-                style={styles.image}
-                source={vanceLogo}
-            />
+    return (
+        <View style={styles.container}>
+            <View style={styles.imageView}>
+                <Image 
+                    style={styles.image}
+                    source={vanceLogo}
+                />
+            </View>
+            <View style={styles.botMenu}>
+                <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('Login')}>
+                <Text style={styles.Text}>Entrar</Text>    
+                </TouchableOpacity>
+                <Text style={styles.linkText} onPress={() => navigation.navigate('PresentationOne')}>
+                    Novo por aqui? Crie sua conta
+                </Text>
+            </View>
         </View>
-        <View style={styles.botMenu}>
-            <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('Login')}>
-              <Text style={styles.Text}>Entrar</Text>    
-            </TouchableOpacity>
-            <Text style={styles.linkText} onPress={() => navigation.navigate('PresentationOne')}>
-                Novo por aqui? Crie sua conta
-            </Text>
-        </View>
-    </View>
-  );
+    );
 }
 
 const styles = StyleSheet.create({
@@ -37,7 +36,7 @@ const styles = StyleSheet.create({
         flex: 1,
         alignItems: 'center',
         justifyContent: 'center',
-        backgroundColor: '#fff',        
+        backgroundColor:  'white',        
     },
     imageView : {
         width: windowWidth, 
@@ -55,7 +54,6 @@ const styles = StyleSheet.create({
         height: '25%',
         alignItems: 'center',
         justifyContent: 'center',
-        backgroundColor: '#fff',
     },
     button: {
         backgroundColor: '#00c0ce',

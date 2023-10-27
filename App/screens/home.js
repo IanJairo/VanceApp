@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, Image, Dimensions, TouchableOpacity, ScrollView, AsyncStorage, FlatList} from 'react-native';
-import { StyleSheet } from 'react-native';
-import { FAB } from 'react-native-paper';
+import { View, StyleSheet, Text, Image, Dimensions, TouchableOpacity, FlatList} from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { ActivityIndicator, FAB } from 'react-native-paper';
 import RenderHTML from 'react-native-render-html';
 
 import profileIcon from '../assets/neyDayFlamengo.png'
@@ -11,27 +11,28 @@ const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
 
 export default function HomeScreen({ navigation }) {
-    useEffect(() => {
-            navigation.setOptions({
-                headerShown: false, // Esta opção oculta o cabeçalho da tela
-            });
-        }, []);
+    
+    const [userDetails, setUserDetails] = useState({}); // [nome, função para alterar o nome
 
+    useEffect(() => {
+        navigation.setOptions({
+            headerShown: false, // Esta opção oculta o cabeçalho da tela
+        });
+        async function fetchData() {
+            const response = await AsyncStorage.getItem('user');
+            if (response !== null) {
+                setUserDetails(JSON.parse(response));
+            }
+        }
+        fetchData();
+    }, []);
+    
     const [selectedButtonIndex, setSelectedButtonIndex] = useState(0);
     const [isSelected, setSelection] = useState(false);
     const [notes, setNotes] = useState([
-    {title: 'TITULO', date: '26/10/2023', content: '<p>hello world</p>'},
-    {title: 'TITULO1', date: '26/10/2023', content: '<p>ola mundo</p>'},
-    {title: 'TITULO2', date: '26/10/2023', content: '<p>ohio gusai matsy</p>'},
-    {title: 'TITULO3', date: '26/10/2023', content: '<p>hello world2</p>'},
-    {title: 'TITULO4', date: '26/10/2023', content: '<p>ola mundo2</p>'},
-    {title: 'TITULO5', date: '26/10/2023', content: '<p>ohio gusai matsy2</p>'},
-    {title: 'TITULO6', date: '26/10/2023', content: '<p>hello world3</p>'},
-    {title: 'TITULO7', date: '26/10/2023', content: '<p>ola mundo3</p>'},
-    {title: 'TITULO8', date: '26/10/2023', content: '<p>ohio gusai matsy3</p>'},
-    {title: 'TITULO9', date: '26/10/2023', content: '<p>hello world4</p>'},
-    {title: 'TITULO10', date: '26/10/2023', content: '<p>ola mundo4</p>'},
-    {title: 'TITULO11', date: '26/10/2023', content: '<p>ohio gusai matsy4</p>'},
+        {title: 'TITULO', date: '26/10/2023', content: '<p>hello world</p>'},
+
+
     ]); // [ {title: 'TITULO', date: 'data', content: 'conteudo'}, ...
     
     const handleButtonPress = (index) => {
@@ -59,6 +60,8 @@ export default function HomeScreen({ navigation }) {
                 shadowOpacity: 0.25,
                 shadowRadius: 3.84,
                 elevation: 5,
+                borderColor: 'black',
+                borderWidth: isSelected ? 1 : 0,
               }}
               onPress={() => handleButtonPress(index)}
             >
@@ -87,17 +90,39 @@ export default function HomeScreen({ navigation }) {
         );
         };
 
+    const renderProfileIcon = () => {
+        return (
+            <View style={{ backgroundColor: '#00c0ce',
+            borderRadius: 50,
+            marginLeft: 10,
+            width: 40,
+            height: 40,
+            justifyContent: 'center',
+            alignItems: 'center', }}> 
+                <Text style={{
+                    color: 'white',
+                    fontSize: 24,
+                    fontWeight: 'bold',
+                }}>{userDetails.data.user.name[0]}</Text>
+            </View>
+        );
+    };
+
+  if (!userDetails) {
+    return <ActivityIndicator />;
+  }
+
   return (
     <View style={styles.container}>
         <TouchableOpacity style={styles.profileView} onPress={() => navigation.navigate('ConfigTab')}>
-            <Image style={styles.image} source={profileIcon}/>
+            {renderProfileIcon()}
             <View style={styles.nameView}>
-                <Text style={styles.nameText}>Neymar Jr</Text>
+                <Text style={styles.nameText}>{userDetails.data.user.name}</Text>
                 <Text style={styles.profileText}>Perfil</Text>
             </View>
         </TouchableOpacity>
         <View style={styles.statisticView}>
-            {[5,2,2].map((value, index) => renderButton(value, index))}
+            {[userDetails.data.user.total_notes, 2, userDetails.data.user.shared_notes].map((value, index) => renderButton(value, index))}
         </View>
         <View style={{ width: windowWidth, height: '5%', flexDirection: 'row', }}>
             {["Notas","Favoritas","Compartilhadas"].map((value, index) => renderTextButton(value, index))}
@@ -110,9 +135,9 @@ export default function HomeScreen({ navigation }) {
                             padding: 20,  
                             marginVertical: 5, 
                             borderRadius: 15,
-                            backgroundColor: '#f5f5f5',
-                            borderColor: '#DBF7F9',
-                            borderWidth: 1,
+                            backgroundColor: '#E4FDFF',
+                            borderColor: '#00c0ce',
+                            borderWidth: 0.5,
                          }} 
                          onPress={( null )}>
                         <Text style={{fontWeight: 'bold', fontSize: 18}}>{item.title}</Text>
@@ -131,7 +156,7 @@ export default function HomeScreen({ navigation }) {
             icon="plus"
             style={styles.fab}
             onPress={() => navigation.navigate('EditNote')}
-            backgroundColor='red'
+            backgroundColor='#00c0ce'
         />
     </View>
 
@@ -188,6 +213,7 @@ const styles = StyleSheet.create({
     },
     fab: {
         position: 'absolute',
+        borderRadius: 15,
         width: 60,
         height: 60,
         alignItems: 'center',
@@ -195,7 +221,6 @@ const styles = StyleSheet.create({
         margin: 16,
         right: 0,
         bottom: 0,
-        backgroundColor: 'red',
       },
     image: {
         width: 50,

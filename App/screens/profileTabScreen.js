@@ -1,5 +1,6 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { View, Text, Image, Dimensions, TouchableOpacity} from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { StyleSheet } from 'react-native';
 
 import logoutIcon from '../assets/logoutIcon.png';
@@ -9,11 +10,24 @@ const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
 
 export default function Profile({ navigation }) {
+
+  const [userDetails, setUserDetails] = useState({}); // [nome, função para alterar o nome
+
     useEffect(() => {
         navigation.setOptions({
           headerShown: false, // Esta opção oculta o cabeçalho da tela
         });
       }, []);
+    
+    useEffect(() => {
+      async function fetchData() {
+          const response = await AsyncStorage.getItem('user');
+          if (response !== null) {
+          setUserDetails(JSON.parse(response));
+          }
+      }
+      fetchData();
+      }, []); 
 
   return (
     <View style={styles.container}>
