@@ -17,6 +17,7 @@ import Profile from './screens/profileTabScreen';
 import AboutUs from './screens/aboutUsTabScreen';
 import HomeScreen from './screens/home';
 import EditNote from './screens/editNoteScreen';
+import CreateNote from './screens/createNoteScreen';
 
 import profileIcon from './assets/profileIcon.png';
 import aboutUsIcon from './assets/awardIcon.png';
@@ -70,6 +71,7 @@ export default function App() {
           <Stack.Screen name='GeneratePin' component={GeneratePin} />
           <Stack.Screen name='ValidatePin' component={ValidatePin} />
           <Stack.Screen name="ResetPassword" component={ResetPassword} />
+          <Stack.Screen name='CreateNote' component={CreateNote} />
           <Stack.Screen name='ConfigTab' component={ConfigTab} options={{
             headerTitle: '',
             }}/>

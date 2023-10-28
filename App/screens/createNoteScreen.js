@@ -14,19 +14,20 @@ import unselectedStar from '../assets/unselectedStar.png';
 
 const windowWidth = Dimensions.get('window').width*0.9;
 
-export default function EditNote({ navigation, route }) {
+export default function CreateNote({ navigation, route }) {
 
-    const { userDetails, item } = route.params;
-    const richText = useRef('');
-    const [favorite, setFavorite] = useState(item.isFavorite);
+    const richText = useRef();
+
+    const [favorite, setFavorite] = useState(false);
     const [date, setDate] = useState('');
-    const [title, setTitle] = useState(item.title);
+    const [title, setTitle] = useState('');
     const [modalEmail, setModalEmail] = useState('');
     const [deletModalVisible, setDeletModalVisible] = useState(false);
     const [sharedModalVisible, setSharedModalVisible] = useState(false);
     const [addModalVisible, setAddModalVisible] = useState(false);
     const [modalOn, setModalOn] = useState(false);
     const [isSelected, setSelected] = useState(false);
+    const { userDetails } = route.params;
 
     const [descHTML, setDescHTML] = useState('');
     const [showDescError, setShowDescError] = useState(false);
@@ -40,9 +41,11 @@ export default function EditNote({ navigation, route }) {
         navigation.setOptions({
           headerShown: false, // Esta opção oculta o cabeçalho da tela
       });
+      console.log('CreateNoteScreen')
         const currentDate = new Date();
         const formattedDate = moment(currentDate).format('DD/MM/YYYY');
         setDate(formattedDate);
+
       }, []);
 
     const changeFavoriteHandle = () => {
@@ -125,8 +128,7 @@ export default function EditNote({ navigation, route }) {
               "date": date,
               'isFavorite': favorite,
             }
-            await notes.editNotes(obj, item.id);
-            navigation.navigate('Home');
+            await notes.postNotes(obj);
         }
     };
 
@@ -153,7 +155,7 @@ export default function EditNote({ navigation, route }) {
                   <TextInput
                       value={title}
                       onChangeText={setTitle}
-
+                      placeholder="Título"
                       style={{ fontSize: 20, fontWeight: "600", color: "lightgray", width: '70%' } }
                   />
                   <Text>{date}</Text>
@@ -164,11 +166,10 @@ export default function EditNote({ navigation, route }) {
           <RichEditor
             ref={richText}
             onChange={richTextHandle}
-            initialContentHTML={item.content}
-            placeholder='Digite aqui o conteúdo da sua nota'
+            placeholder="Anote aqui suas ideias :"
             androidHardwareAccelerationDisabled={true}
             style={styles.richTextEditorStyle}
-            initialHeight={300}
+            initialHeight={500}
           />
           <RichToolbar
             editor={richText}

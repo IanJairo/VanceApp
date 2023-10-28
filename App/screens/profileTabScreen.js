@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, Image, Dimensions, TouchableOpacity} from 'react-native';
+import { View, Text, Image, Dimensions, TouchableOpacity, ActivityIndicator} from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { StyleSheet } from 'react-native';
 
@@ -12,6 +12,7 @@ const windowHeight = Dimensions.get('window').height;
 export default function Profile({ navigation }) {
 
   const [userDetails, setUserDetails] = useState({}); // [nome, função para alterar o nome
+  const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
         navigation.setOptions({
@@ -24,10 +25,15 @@ export default function Profile({ navigation }) {
           const response = await AsyncStorage.getItem('user');
           if (response !== null) {
           setUserDetails(JSON.parse(response));
+          setIsLoading(false);
           }
       }
       fetchData();
       }, []); 
+
+  if (isLoading) {
+    return <ActivityIndicator />;
+  }
 
   return (
     <View style={styles.container}>

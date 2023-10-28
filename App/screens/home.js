@@ -1,18 +1,31 @@
 import React, { useEffect, useState } from 'react';
-import { View, StyleSheet, Text, Image, Dimensions, TouchableOpacity, FlatList} from 'react-native';
+import { View, StyleSheet, Text, Image, Dimensions, TouchableOpacity, FlatList, ActivityIndicator} from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { ActivityIndicator, FAB } from 'react-native-paper';
+import { FAB } from 'react-native-paper';
 import RenderHTML from 'react-native-render-html';
 
-import profileIcon from '../assets/neyDayFlamengo.png'
 import underline from '../assets/underline.png'
+import notesApi from '../providers/notes'
 
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
 
+
 export default function HomeScreen({ navigation }) {
     
     const [userDetails, setUserDetails] = useState({}); // [nome, função para alterar o nome
+    const [isLoading, setIsLoading] = useState(true);
+    const [notes, setNotes] = useState([]); // [ {title: 'TITULO', date: 'data', content: 'conteudo'}, ...
+
+    const getNotes = async (idUser) => {
+        const obj = {
+            "user": {
+                "id": idUser
+            },
+        };
+        const response = await notesApi.getNotes(obj);
+        return response;
+    }
 
     useEffect(() => {
         navigation.setOptions({
@@ -22,6 +35,9 @@ export default function HomeScreen({ navigation }) {
             const response = await AsyncStorage.getItem('user');
             if (response !== null) {
                 setUserDetails(JSON.parse(response));
+                const notesGet = await getNotes(userDetails.data.user.id);
+                setIsLoading(false);
+                setNotes(notesGet);
             }
         }
         fetchData();
@@ -29,15 +45,12 @@ export default function HomeScreen({ navigation }) {
     
     const [selectedButtonIndex, setSelectedButtonIndex] = useState(0);
     const [isSelected, setSelection] = useState(false);
-    const [notes, setNotes] = useState([
-        {title: 'TITULO', date: '26/10/2023', content: '<p>hello world</p>'},
 
-
-    ]); // [ {title: 'TITULO', date: 'data', content: 'conteudo'}, ...
-    
     const handleButtonPress = (index) => {
         setSelectedButtonIndex(index);
+        getNotes(userDetails.data.user.id);
         };
+
 
     const renderButton = (value, index) => {
           const isSelected = selectedButtonIndex === index;
@@ -108,8 +121,13 @@ export default function HomeScreen({ navigation }) {
         );
     };
 
-  if (!userDetails) {
-    return <ActivityIndicator />;
+  if (isLoading) {
+    return (
+        <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+            <Image source={require('../assets/logo.png')} style={{ width: 200, height: 200 }} />
+            <ActivityIndicator size="large" color="#00c0ce" />
+        </View>
+    );
   }
 
   return (
@@ -139,8 +157,9 @@ export default function HomeScreen({ navigation }) {
                             borderColor: '#00c0ce',
                             borderWidth: 0.5,
                          }} 
-                         onPress={( null )}>
-                        <Text style={{fontWeight: 'bold', fontSize: 18}}>{item.title}</Text>
+                         onPress={() => navigation.navigate('EditNote', {userDetails, item})}>
+                        {/* navigation.navigate('EditNote', {userDetails, item}) */}
+                        <Text style={{fontWeight: 'bold', fontSize: 18, color: '#2F2E50'}}>{item.title}</Text>
                         <RenderHTML
                             contentWidth={windowWidth*0.9}
                             source={{ html: item.content }}
@@ -155,7 +174,7 @@ export default function HomeScreen({ navigation }) {
         <FAB
             icon="plus"
             style={styles.fab}
-            onPress={() => navigation.navigate('EditNote')}
+            onPress={() => navigation.navigate('CreateNote', {userDetails})}
             backgroundColor='#00c0ce'
         />
     </View>
