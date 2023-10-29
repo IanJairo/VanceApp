@@ -6,9 +6,9 @@ import arrowImage from '../assets/backArrow.png'
 
 const windowWidth = Dimensions.get('window').width;
 const windowsHeight = Dimensions.get('window').height;
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import axios from 'axios';
-import accessToApp from '../providers/accessToApp';
 
 export default function LoginScreen({ navigation }) {
     useEffect(() => {

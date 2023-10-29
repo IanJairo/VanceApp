@@ -18,6 +18,17 @@ const accessToApp = {
         }
 
     },
+    logout: async () => {
+        let resp = {error: null, message: null};
+        await AsyncStorage.removeItem('user').then(() => {
+            resp = {error: null, message: "Logout feito com sucesso"};
+        }).catch((e) => {
+            resp = {error: e, message: "Problema ao fazer logout"};
+        });
+        
+        return resp;
+
+    },
     login: async (email, password) => {
         const credentials = { email, password };
         const baseURL = 'https://vance-drab.vercel.app/api/login';

@@ -9,6 +9,9 @@ import profileIcon from '../assets/neyDayFlamengo.png';
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
 
+import accessToApp from '../providers/accessToApp';
+
+
 export default function Profile({ navigation }) {
 
   const [userDetails, setUserDetails] = useState({}); // [nome, função para alterar o nome
@@ -66,7 +69,7 @@ export default function Profile({ navigation }) {
         <Text style={styles.name}>{userDetails.name}</Text>
       </View>
       <View style={styles.signOutView}>
-        <TouchableOpacity style={styles.signOutButton} onPress={() => navigation.navigate('Login') }>
+        <TouchableOpacity style={styles.signOutButton} onPress={() =>{ accessToApp.logout() && navigation.navigate('Login')} }>
           <Text style={styles.signOutText}>Sair</Text>
           <Image 
             style={styles.logoutIcon} 
