@@ -10,7 +10,6 @@ import notesApi from '../providers/notes'
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
 
-
 export default function HomeScreen({ navigation }) {
     
     const [userDetails, setUserDetails] = useState({}); // [nome, função para alterar o nome
@@ -30,9 +29,19 @@ export default function HomeScreen({ navigation }) {
         }
     }
 
-    useEffect(() => {
+    const refreshData = async () => {
+        const response = await AsyncStorage.getItem('user');
+        if (response !== null) {
+          const userDetails = JSON.parse(response)
+          setUserDetails(userDetails);
+          getNotes(userDetails.id);
+          setIsLoading(false);
+        }
+      }
+      
+      useEffect(() => {
         navigation.setOptions({
-            headerShown: false, // Esta opção oculta o cabeçalho da tela
+          headerShown: false, // Esta opção oculta o cabeçalho da tela
         });
         async function fetchData() {
             const response = await AsyncStorage.getItem('user');
@@ -136,13 +145,18 @@ export default function HomeScreen({ navigation }) {
 
   return (
     <View style={styles.container}>
-        <TouchableOpacity style={styles.profileView} onPress={() => navigation.navigate('ConfigTab')}>
-            {renderProfileIcon()}
-            <View style={styles.nameView}>
-                <Text style={styles.nameText}>{userDetails.name}</Text>
-                <Text style={styles.profileText}>Perfil</Text>
-            </View>
-        </TouchableOpacity>
+        <View style={styles.header}>
+            <TouchableOpacity style={styles.profileView} onPress={() => navigation.navigate('ConfigTab')}>
+                {renderProfileIcon()}
+                <View style={styles.nameView}>
+                    <Text style={styles.nameText}>{userDetails.name}</Text>
+                    <Text style={styles.profileText}>Perfil</Text>
+                </View>
+            </TouchableOpacity>
+            <TouchableOpacity style={{ height: '60%', width: windowWidth*0.2,backgroundColor: '#00c0ce', borderRadius:15, alignItems: 'center', justifyContent: 'center' }} onPress={() => refreshData()}>
+                <Text style={{color: 'white', textAlign: 'center', fontWeight: 'bold' }}>Atualizar Notas</Text>
+            </TouchableOpacity>
+        </View>
         <View style={styles.statisticView}>
             {[userDetails.total_notes, 2, userDetails.shared_notes].map((value, index) => renderButton(value, index))}
         </View>
@@ -193,10 +207,19 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         backgroundColor: '#fff',        
     },
-    profileView: {
-        width: windowWidth*0.8,
+    header: {
+        width: windowWidth,
+        marginTop: 20,
+        height: '15%',
+        alignItems: 'center',
+        justifyContent: 'space-between',
         flexDirection: 'row',
-        height: '10%',
+        paddingHorizontal: 10,
+    },
+    profileView: {
+        width: windowWidth*0.7,
+        height: '60%',
+        flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'flex-start',
         backgroundColor: '#f5f5f5',
@@ -230,7 +253,7 @@ const styles = StyleSheet.create({
     },
     notesViews: {
         width: windowWidth*0.9,
-        height: '50%',
+        height: '60%',
         alignItems: 'center',
         justifyContent: 'center',
     },

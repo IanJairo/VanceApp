@@ -14,25 +14,46 @@ export default function Profile({ navigation }) {
   const [userDetails, setUserDetails] = useState({}); // [nome, função para alterar o nome
   const [isLoading, setIsLoading] = useState(true);
 
-    useEffect(() => {
-        navigation.setOptions({
-          headerShown: false, // Esta opção oculta o cabeçalho da tela
-        });
-      }, []);
-    
-    useEffect(() => {
-      async function fetchData() {
-          const response = await AsyncStorage.getItem('user');
-          if (response !== null) {
-          setUserDetails(JSON.parse(response));
-          setIsLoading(false);
-          }
-      }
-      fetchData();
-      }, []); 
+  useEffect(() => {
+    navigation.setOptions({
+      headerShown: false, // Esta opção oculta o cabeçalho da tela
+    });
+    async function fetchData() {
+        const response = await AsyncStorage.getItem('user');
+        if (response !== null) {
+            const userDetails = JSON.parse(response)
+            setUserDetails(userDetails);
+            console.log(userDetails);
+            setIsLoading(false);
+        }
+    }
+    fetchData();
+}, []);
+
+    const renderProfileIcon = () => {
+      return (
+          <View style={{ backgroundColor: '#00c0ce',
+          borderRadius: 25,
+          width: 160,
+          height: 160,
+          justifyContent: 'center',
+          alignItems: 'center', }}> 
+              <Text style={{
+                  color: 'white',
+                  fontSize: 120,
+                  fontWeight: 'bold',
+              }}>{userDetails.name[0]}</Text>
+          </View>
+      );
+  };
 
   if (isLoading) {
-    return <ActivityIndicator />;
+    return (
+      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+          <Image source={require('../assets/logo.png')} style={{ width: 200, height: 200 }} />
+          <ActivityIndicator size="large" color="#00c0ce" />
+      </View>
+    ) 
   }
 
   return (
@@ -41,11 +62,8 @@ export default function Profile({ navigation }) {
         <Text style={styles.title}>Perfil</Text>
       </View>
       <View style={styles.imageView}>
-        <Image 
-          style={styles.image} 
-          source={profileIcon} 
-        />
-        <Text style={styles.name}>Neymar Jr</Text>
+        {renderProfileIcon()}
+        <Text style={styles.name}>{userDetails.name}</Text>
       </View>
       <View style={styles.signOutView}>
         <TouchableOpacity style={styles.signOutButton} onPress={() => navigation.navigate('Login') }>
@@ -59,15 +77,15 @@ export default function Profile({ navigation }) {
       <View style={styles.statisticView}>
         <View style={styles.statistic}>
           <Text style={styles.identificationText}>Email</Text>
-          <Text style={{ textDecorationLine: 'underline', fontSize: 18 }}>neymarjr@vance.com</Text>
+          <Text style={{ textDecorationLine: 'underline', fontSize: 18 }}>{userDetails.email}</Text>
         </View>
         <View style={styles.statistic}>
           <Text style={styles.identificationText}>Total de notas:</Text>
-          <Text>numero</Text>
+          <Text>{userDetails.total_notes}</Text>
         </View>
         <View style={styles.statistic}>
           <Text style={styles.identificationText}>Compartilhadas:</Text>
-          <Text>numero</Text>
+          <Text>{userDetails.shared_notes}</Text>
         </View>
       </View>
     </View>
@@ -98,11 +116,6 @@ const styles = StyleSheet.create({
       height: windowHeight * 0.24,
       alignItems: 'center',
       justifyContent: 'center',
-    },
-    image: {
-      width: 160,
-      height: 160,
-      borderRadius: 25,
     },
     name: {
       top: 10,

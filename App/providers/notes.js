@@ -2,6 +2,7 @@ import axios from 'axios';
 const baseURL = 'https://vance-drab.vercel.app/api/notes/';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
+// pegar dados do usuário do banco local
 const getUser = async () => {
     const response = await AsyncStorage.getItem('user');
     if (response !== null) {
@@ -28,7 +29,12 @@ const notesApi = {
     },
     postNotes: async (form) => {
         try {
-            const response = await axios.post(baseURL, form);
+            const userDetails = await getUser();
+            const response = await axios.post(baseURL, form, {
+                headers: {
+                    Authorization: `Bearer ${userDetails.token}`
+                  }
+            });
             return response.data.data;
         } catch (error) {
             console.log(error);
@@ -37,7 +43,12 @@ const notesApi = {
     },
     editNotes: async (obj, id) => {
         try {
-            const response = await axios.put(baseURL+id, obj);
+            const userDetails = await getUser();
+            const response = await axios.put(baseURL+id, obj, {
+                headers: {
+                    Authorization: `Bearer ${userDetails.token}`
+                  }
+            });
             return response.data.data;
         } catch (error) {
             console.log(error);

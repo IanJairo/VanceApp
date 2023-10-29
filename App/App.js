@@ -38,7 +38,7 @@ function ConfigTab() {
 
   return (
     <Tab.Navigator
-      screenOptions={({route}) => ({ tabBarIcon: () => iconSelector(route)})}
+      screenOptions={({route}) => ({tabBarIcon: () => iconSelector(route)})}
       tabBarOptions={{
         showLabel: false,
         style: {
@@ -57,8 +57,7 @@ function ConfigTab() {
 export default function App() {
   return (
       <NavigationContainer>
-        <Stack.Navigator >
-          {/* Defina a rota para a tela de teste */}
+        <Stack.Navigator options={{ headerTitle:'' }}>
           <Stack.Screen name="Intro" component={IntroScreen} />
           <Stack.Screen name="Login" component={LoginScreen} />
           <Stack.Screen name="PresentationOne" component={PresentationScreenOne} />
