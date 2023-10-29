@@ -24,7 +24,10 @@ export default function HomeScreen({ navigation }) {
             },
         };
         const response = await notesApi.getNotes(obj);
-        return response;
+
+        if(response){
+            setNotes(response)
+        }
     }
 
     useEffect(() => {
@@ -34,21 +37,22 @@ export default function HomeScreen({ navigation }) {
         async function fetchData() {
             const response = await AsyncStorage.getItem('user');
             if (response !== null) {
-                setUserDetails(JSON.parse(response));
-                const notesGet = await getNotes(userDetails.data.user.id);
+                const userDetails = JSON.parse(response)
+                setUserDetails(userDetails);
+                getNotes(userDetails.id);
                 setIsLoading(false);
-                setNotes(notesGet);
             }
         }
         fetchData();
     }, []);
+
     
     const [selectedButtonIndex, setSelectedButtonIndex] = useState(0);
     const [isSelected, setSelection] = useState(false);
 
     const handleButtonPress = (index) => {
         setSelectedButtonIndex(index);
-        getNotes(userDetails.data.user.id);
+        getNotes(setUserDetails.id);
         };
 
 
@@ -116,7 +120,7 @@ export default function HomeScreen({ navigation }) {
                     color: 'white',
                     fontSize: 24,
                     fontWeight: 'bold',
-                }}>{userDetails.data.user.name[0]}</Text>
+                }}>{userDetails.name[0]}</Text>
             </View>
         );
     };
@@ -135,12 +139,12 @@ export default function HomeScreen({ navigation }) {
         <TouchableOpacity style={styles.profileView} onPress={() => navigation.navigate('ConfigTab')}>
             {renderProfileIcon()}
             <View style={styles.nameView}>
-                <Text style={styles.nameText}>{userDetails.data.user.name}</Text>
+                <Text style={styles.nameText}>{userDetails.name}</Text>
                 <Text style={styles.profileText}>Perfil</Text>
             </View>
         </TouchableOpacity>
         <View style={styles.statisticView}>
-            {[userDetails.data.user.total_notes, 2, userDetails.data.user.shared_notes].map((value, index) => renderButton(value, index))}
+            {[userDetails.total_notes, 2, userDetails.shared_notes].map((value, index) => renderButton(value, index))}
         </View>
         <View style={{ width: windowWidth, height: '5%', flexDirection: 'row', }}>
             {["Notas","Favoritas","Compartilhadas"].map((value, index) => renderTextButton(value, index))}

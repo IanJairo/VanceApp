@@ -26,7 +26,9 @@ const accessToApp = {
             const response = await axios.post(baseURL, credentials);
 
             if (response.data.error === null || response.data.error === '') {
-                await AsyncStorage.setItem('user', JSON.stringify(response.data));
+                // console.log("response123", response.data.data.user)
+                const user = response.data.data.user
+                await AsyncStorage.setItem('user', JSON.stringify(user));
                 return { message: response.data.data.message, sucess: true };
             } else {
                 return { message: response.data.error, sucess: false };
