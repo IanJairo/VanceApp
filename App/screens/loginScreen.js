@@ -1,20 +1,27 @@
 import React, { useEffect, useState } from 'react';
 import { useColorScheme, StyleSheet, View, Text, Image, Dimensions, TouchableOpacity, TextInput, Alert, KeyboardAvoidingView } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import accessToApp from '../providers/accessToApp';
 import eyeOpened from '../assets/openEyeIcon.png'
 import eyeClosed from '../assets/closedEyeIcon.png'
 import arrowImage from '../assets/backArrow.png'
 
 const windowWidth = Dimensions.get('window').width;
 const windowsHeight = Dimensions.get('window').height;
-import AsyncStorage from '@react-native-async-storage/async-storage';
-
-import axios from 'axios';
 
 export default function LoginScreen({ navigation }) {
+    
+    const [loged, setLoged] = useState(false);
+
     useEffect(() => {
         navigation.setOptions({
             headerShown: false, // Esta opção oculta o cabeçalho da tela
         });
+        async function fetchData() {
+            const response = await AsyncStorage.getItem('user');
+            setLoged(response);
+        }
+        fetchData();
     }, []);
 
     const [eyeOpen, setEyeOpen] = useState(true);
@@ -45,44 +52,48 @@ export default function LoginScreen({ navigation }) {
         navigation.replace('Home')
     }
 
-    return (
-        <View style={styles.container}>
-            <KeyboardAvoidingView behavior={Platform.OS === "ios" ? "padding" : "height"} style={styles.container}>
-
-                <View style={styles.arrowView}>
-                    <TouchableOpacity onPress={() => navigation.navigate('Intro')}>
-                        <Image style={styles.arrowImage} source={arrowImage} />
-                    </TouchableOpacity>
-                </View>
-                <View style={styles.formView}>
-                    <View style={styles.titleView}>
-                        <Text style={styles.Title}>Bem-vindo de volta!</Text>
+    if (loged) {
+        navigation.replace('Home')
+    } else {
+        return (
+            <View style={styles.container}>
+                <KeyboardAvoidingView behavior={Platform.OS === "ios" ? "padding" : "height"} style={styles.container}>
+    
+                    <View style={styles.arrowView}>
+                        <TouchableOpacity onPress={() => navigation.navigate('Intro')}>
+                            <Image style={styles.arrowImage} source={arrowImage} />
+                        </TouchableOpacity>
                     </View>
-                    <View style={styles.inputView}>
-                        <Text style={styles.Text}>Digite seu Email</Text>
-                        <TextInput onChangeText={setEmail} value={email} style={styles.input} placeholder="email@vance.com" />
-                    </View>
-                    <View style={styles.inputView}>
-                        <Text style={styles.Text}>Digite sua senha</Text>
-                        <View style={styles.passwordSection}>
-                            <TextInput onChangeText={setPassword}  secureTextEntry={eyeOpen} value={password} style={styles.input} placeholder="**********" />
-                            <TouchableOpacity onPress={() => setEyeOpen(!eyeOpen)}>
-                                <Image style={styles.eyeImage}
-                                    source={eyeOpen ? eyeOpened : eyeClosed} />
-                            </TouchableOpacity>
+                    <View style={styles.formView}>
+                        <View style={styles.titleView}>
+                            <Text style={styles.Title}>Bem-vindo de volta!</Text>
                         </View>
-
-                        <Text style={styles.recoverPassword} onPress={() => navigation.navigate('GeneratePin')}>Recuperar a senha</Text>
+                        <View style={styles.inputView}>
+                            <Text style={styles.Text}>Digite seu Email</Text>
+                            <TextInput onChangeText={setEmail} value={email} style={styles.input} placeholder="email@vance.com" />
+                        </View>
+                        <View style={styles.inputView}>
+                            <Text style={styles.Text}>Digite sua senha</Text>
+                            <View style={styles.passwordSection}>
+                                <TextInput onChangeText={setPassword}  secureTextEntry={eyeOpen} value={password} style={styles.input} placeholder="**********" />
+                                <TouchableOpacity onPress={() => setEyeOpen(!eyeOpen)}>
+                                    <Image style={styles.eyeImage}
+                                        source={eyeOpen ? eyeOpened : eyeClosed} />
+                                </TouchableOpacity>
+                            </View>
+    
+                            <Text style={styles.recoverPassword} onPress={() => navigation.navigate('GeneratePin')}>Recuperar a senha</Text>
+                        </View>
                     </View>
-                </View>
-                <View style={styles.buttonView}>
-                    <TouchableOpacity style={styles.button} onPress={() => login(email, password)}>
-                        <Text style={styles.buttonText}>Continuar</Text>
-                    </TouchableOpacity>
-                </View>
-            </KeyboardAvoidingView>
-        </View>
-    );
+                    <View style={styles.buttonView}>
+                        <TouchableOpacity style={styles.button} onPress={() => login(email, password)}>
+                            <Text style={styles.buttonText}>Continuar</Text>
+                        </TouchableOpacity>
+                    </View>
+                </KeyboardAvoidingView>
+            </View>
+        );
+    }   
 }
 
 const styles = StyleSheet.create({

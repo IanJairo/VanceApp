@@ -7,47 +7,34 @@ import vanceLogo from '../assets/logo.png';
 const windowWidth = Dimensions.get('window').width;
 
 export default function IntroScreen({ navigation }) {
-    
-    const [user, setUser] = useState({});
-    
+        
     useEffect(() => {
         navigation.setOptions({
             headerShown: false, // Esta opção oculta o cabeçalho da tela
         });
-        async function fetchData() {
-            const response = await AsyncStorage.getItem('user');
-            setUser(response);
-            if (user !== null) {
-                navigation.navigate('Home');
-            }
-        }
-        fetchData();
     }, []);
 
 
-    if (user) {
-        navigation.navigate('Home');
-    } else {
-        return (
-            <View style={styles.container}>
-                <View style={styles.imageView}>
-                    <Image 
-                        style={styles.image}
-                        source={vanceLogo}
-                    />
-                </View>
-                <View style={styles.botMenu}>
-                    <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('Login')}>
-                    <Text style={styles.Text}>Entrar</Text>    
-                    </TouchableOpacity>
-                    <Text style={styles.linkText} onPress={() => navigation.navigate('PresentationOne')}>
-                        Novo por aqui? Crie sua conta
-                    </Text>
-                </View>
+    return (
+        <View style={styles.container}>
+            <View style={styles.imageView}>
+                <Image 
+                    style={styles.image}
+                    source={vanceLogo}
+                />
             </View>
-        );
-    }
+            <View style={styles.botMenu}>
+                <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('Login')}>
+                <Text style={styles.Text}>Entrar</Text>    
+                </TouchableOpacity>
+                <Text style={styles.linkText} onPress={() => navigation.navigate('PresentationOne')}>
+                    Novo por aqui? Crie sua conta
+                </Text>
+            </View>
+        </View>
+    );
 }
+
 
 const styles = StyleSheet.create({
     container : {
