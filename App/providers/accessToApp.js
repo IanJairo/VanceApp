@@ -27,7 +27,8 @@ const accessToApp = {
 
             if (response.data.error === null || response.data.error === '') {
                 // console.log("response123", response.data.data.user)
-                const user = response.data.data.user
+                let user = response.data.data.user
+                user.token = response.data.data.token
                 await AsyncStorage.setItem('user', JSON.stringify(user));
                 return { message: response.data.data.message, sucess: true };
             } else {
