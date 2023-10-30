@@ -12,9 +12,12 @@ const windowHeight = Dimensions.get('window').height;
 
 export default function HomeScreen({ navigation }) {
     
-    const [userDetails, setUserDetails] = useState({}); // [nome, função para alterar o nome
+    const [userDetails, setUserDetails] = useState({});
     const [isLoading, setIsLoading] = useState(true);
-    const [notes, setNotes] = useState([]); // [ {title: 'TITULO', date: 'data', content: 'conteudo'}, ...
+    const [notes, setNotes] = useState([]);
+    const [favoriteNotes, setFavoriteNotes] = useState([]);
+    const [sharedNotes, setSharedNotes] = useState([]); 
+    const [selectedButtonIndex, setSelectedButtonIndex] = useState(0);
 
     const getNotes = async (idUser) => {
         const obj = {
@@ -29,12 +32,20 @@ export default function HomeScreen({ navigation }) {
         }
     }
 
+    const getFavoriteNotes = async () => {
+        const response = await notesApi.getFavoriteNotes();
+        if(response){
+            setFavoriteNotes(response)
+        }
+    }
+
     const refreshData = async () => {
         const response = await AsyncStorage.getItem('user');
         if (response !== null) {
           const userDetails = JSON.parse(response)
           setUserDetails(userDetails);
           getNotes(userDetails.id);
+          getFavoriteNotes();
           setIsLoading(false);
         }
       }
@@ -49,21 +60,19 @@ export default function HomeScreen({ navigation }) {
                 const userDetails = JSON.parse(response)
                 setUserDetails(userDetails);
                 getNotes(userDetails.id);
+                getFavoriteNotes();
                 setIsLoading(false);
+                console.log(notes)
+                console.log(favoriteNotes)
             }
         }
         fetchData();
     }, []);
 
-    
-    const [selectedButtonIndex, setSelectedButtonIndex] = useState(0);
-    const [isSelected, setSelection] = useState(false);
-
     const handleButtonPress = (index) => {
         setSelectedButtonIndex(index);
         getNotes(setUserDetails.id);
         };
-
 
     const renderButton = (value, index) => {
           const isSelected = selectedButtonIndex === index;
@@ -86,8 +95,6 @@ export default function HomeScreen({ navigation }) {
                 shadowOpacity: 0.25,
                 shadowRadius: 3.84,
                 elevation: 5,
-                borderColor: 'black',
-                borderWidth: isSelected ? 1 : 0,
               }}
               onPress={() => handleButtonPress(index)}
             >
@@ -165,7 +172,7 @@ export default function HomeScreen({ navigation }) {
         </View>
         <View style={styles.notesViews}>
             <FlatList
-                data={notes}
+                data={selectedButtonIndex === 0 ? notes : selectedButtonIndex === 1 ? favoriteNotes : selectedButtonIndex === 2 ? sharedNotes : []}
                 renderItem={({ item }) => (
                     <TouchableOpacity style={{
                             padding: 20,  

@@ -57,7 +57,7 @@ function ConfigTab() {
 export default function App() {
   return (
       <NavigationContainer>
-        <Stack.Navigator options={{ headerTitle:'' }}>
+        <Stack.Navigator >
           <Stack.Screen name="Intro" component={IntroScreen} />
           <Stack.Screen name="Login" component={LoginScreen} />
           <Stack.Screen name="PresentationOne" component={PresentationScreenOne} />

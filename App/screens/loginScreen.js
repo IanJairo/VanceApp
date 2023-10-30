@@ -17,11 +17,13 @@ export default function LoginScreen({ navigation }) {
         navigation.setOptions({
             headerShown: false, // Esta opção oculta o cabeçalho da tela
         });
-        async function fetchData() {
-            const response = await AsyncStorage.getItem('user');
-            setLoged(response);
-        }
-        fetchData();
+        // async function fetchData() {
+        //     const response = await AsyncStorage.getItem('user');
+        //     if (response !== null) {
+        //         setLoged(true);
+        //     }
+        // }
+        // fetchData();
     }, []);
 
     const [eyeOpen, setEyeOpen] = useState(true);
@@ -52,9 +54,9 @@ export default function LoginScreen({ navigation }) {
         navigation.replace('Home')
     }
 
-    if (loged) {
-        navigation.replace('Home')
-    } else {
+    // if (loged) {
+    //     navigation.replace('Home')
+    // } else {
         return (
             <View style={styles.container}>
                 <KeyboardAvoidingView behavior={Platform.OS === "ios" ? "padding" : "height"} style={styles.container}>
@@ -94,7 +96,7 @@ export default function LoginScreen({ navigation }) {
             </View>
         );
     }   
-}
+// }
 
 const styles = StyleSheet.create({
     container: {

@@ -23,7 +23,21 @@ const notesApi = {
             });
             return response.data.data;
         } catch (error) {
-            console.log(error);
+            console.log('Erro ao pegar as notas, '+error);
+            return [];
+        }
+    },
+    getFavoriteNotes: async () => {
+        try {
+            const userDetails = await getUser();
+            const reponse = await axios.get(baseURL+'favorites/'+userDetails.id, {
+                headers: {
+                    Authorization: `Bearer ${userDetails.token}`
+                }
+            });
+            return reponse.data.data;
+        } catch (error) {
+            console.log('Erro ao pegas as notas favoritas, '+error);
             return [];
         }
     },
