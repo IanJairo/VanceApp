@@ -47,7 +47,6 @@ export default function NameRegister({ navigation, route }) {
     return (
         <View style={styles.container}>
             <KeyboardAvoidingView behavior={Platform.OS === "ios" ? "padding" : "height"} style={styles.container}>
-
                 <View style={styles.navigateView}>
                     <View style={styles.arrowView}>
                         <TouchableOpacity onPress={() => navigation.navigate('EmailRegister')}>
@@ -113,6 +112,7 @@ const styles = StyleSheet.create({
         width: windowWidth,
         flexDirection: 'row',
         height: '15%',
+        minHeight: '15%',
     },
     arrowView: {
         width: windowWidth * 0.5,
@@ -136,14 +136,16 @@ const styles = StyleSheet.create({
     },
     formView: {
         width: windowWidth,
-        height: '50%',
+        height: '30%',
+        minHeight: '30%',
         alignItems: 'flex-start',
         justifyContent: 'center',
     },
     titleView: {
         width: windowWidth,
         alignItems: 'flex-start',
-        height: '10%',
+        height: '25%',
+        minHeight: '15%',
     },
     Title: {
         fontSize: 35,
@@ -160,15 +162,12 @@ const styles = StyleSheet.create({
         color: '#A9A4A4',
     },
     inputView: {
-        width: windowWidth,
-        height: '20%',
-        alignItems: 'flex-start',
-        justifyContent: 'center',
-        marginTop: '10%',
+        textAlign: 'left',
     },
     buttonView: {
         width: windowWidth,
-        height: '25%',
+        height: '30%',
+        minHeight: '30%',
         alignItems: 'center',
         justifyContent: 'center',
     },

@@ -98,18 +98,20 @@ const styles = StyleSheet.create({
   },
   imageView: {
     width: windowWidth,
-    height: '35%',
+    height: '20%',
     alignItems: 'center',
     justifyContent: 'flex-end',
   },
   image: {
-    width: 160,
-    height: 170,
+    width: 140,
+    height: 150,
   },
   textView: {
     width: windowWidth * 0.8,
     justifyContent: 'flex-end',
     height: '25%',
+    minHeight: '18%',
+    marginBottom: 30,
   },
   title: {
     fontSize: 32,
@@ -123,7 +125,8 @@ const styles = StyleSheet.create({
   inputView: {
     justifyContent: 'center',
     width: windowWidth * 0.85,
-    height: '20%',
+    height: '25%',
+    marginBottom: 30,
   },
   pinContainer: {
     flexDirection: 'row',
@@ -134,19 +137,19 @@ const styles = StyleSheet.create({
     width: 40,
     height: 50,
     borderRadius: 10,
-    backgroundColor: 'lightblue',
     textAlign: 'center',
     marginRight: 10,
+    backgroundColor: '#E9E9E9',
   },
   buttonView: {
     width: windowWidth,
-    height: '25%',
+    minHeight: '15%',
     alignItems: 'center',
     justifyContent: 'center',
   },
   button: {
     backgroundColor: '#00c0ce',
-    width: 355,
+    width: windowWidth * 0.9,
     height: 42,
     borderRadius: 10,
     alignItems: 'center',

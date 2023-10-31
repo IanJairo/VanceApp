@@ -117,6 +117,7 @@ const styles = StyleSheet.create({
     formView: {
         width: windowWidth,
         height: '75%',
+        minHeight: '35%',
         alignItems: 'flex-start',
     },
     titleView: {

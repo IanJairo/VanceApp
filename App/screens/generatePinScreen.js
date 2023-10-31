@@ -80,8 +80,8 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-end',
   },
   image: {
-    width: 160,
-    height: 170,
+    width: 140,
+    height: 150,
   },
   textView: {
     width: windowWidth * 0.8,
@@ -102,6 +102,7 @@ const styles = StyleSheet.create({
     bottom: 15,
     width: windowWidth * 0.85,
     height: '20%',
+    minHeight: '15%',
   },
   input: {
     width: windowWidth * 0.85,

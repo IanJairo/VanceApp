@@ -169,13 +169,15 @@ const styles = StyleSheet.create({
     formView: {
         width: windowWidth,
         height: '50%',
+        minHeight: '40%',
         alignItems: 'flex-start',
         justifyContent: 'center',
     },
     titleView: {
         width: windowWidth,
         alignItems: 'flex-start',
-        height: '10%',
+        height: '15%',
+        minHeight: '10%',
     },
     Title: {
         fontSize: 35,
@@ -210,6 +212,7 @@ const styles = StyleSheet.create({
     buttonView: {
         width: windowWidth,
         height: '25%',
+        minHeight: '10%',
         alignItems: 'center',
         justifyContent: 'center',
     },
