@@ -11,7 +11,7 @@ const windowsHeight = Dimensions.get('window').height;
 
 export default function LoginScreen({ navigation }) {
     
-    const [loged, setLoged] = useState(false);
+    // const [loged, setLoged] = useState(false);
 
     useEffect(() => {
         navigation.setOptions({
