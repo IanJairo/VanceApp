@@ -145,6 +145,28 @@ const notesApi = {
             return [];
 
         }
+    },
+
+    updateNotePermission: async (form) => {
+        try {
+            const userDetails = await getUser();
+            const response = await axios.post(baseURL + 'shared/permission', form, {
+                headers: {
+                    Authorization: `Bearer ${userDetails.token}`
+                }
+            });
+
+            if (response.data.error == null) {
+                return { message: response.data.message, sucess: true };
+            }
+            else {
+                return { message: response.data.message, sucess: false };
+            }
+
+        } catch (error) {
+            console.log('Erro ao atualizar a permissão, ' + error);
+            return [];
+        }
     }
 };
 

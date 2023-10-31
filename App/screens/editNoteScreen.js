@@ -97,11 +97,9 @@ export default function EditNote({ navigation, route }) {
     const response = notesApi.deleteNote(item.id);
 
     if (response) {
-      console.log('Nota deletada com sucesso!');
       setDeletModalVisible(false);
       navigation.navigate('Home');
     } else {
-      console.log('Erro ao deletar nota!');
       Alert.alert('Erro', 'Erro ao deletar nota!');
     }
 
@@ -164,6 +162,24 @@ export default function EditNote({ navigation, route }) {
 
   };
 
+  const handlePermission = async (user) => {
+    console.log('item', item)
+    const obj = {
+      "noteId": item.id,
+      "userId": user.id,
+      "canEdit": user.can_edit
+    }
+
+    console.log('obj', obj);
+    const response = await notesApi.updateNotePermission(obj);
+
+    if (!response.sucess) {
+      Alert.alert('Erro', response.message);
+      return
+    }
+
+
+  }
 
   const richTextHandle = (descriptionText) => {
     if (!descriptionText || title === '') {
@@ -318,12 +334,13 @@ export default function EditNote({ navigation, route }) {
                     {renderProfileIcon(item.name)}
 
                     <View style={{ flexDirection: 'column', marginRight: 10, width: windowWidth * 0.4 }}>
-                      <Text style={styles.h2}>{item.name}</Text>
+                      <Text style={styles.h2}>{item.can_edit}</Text>
                       <Text style={styles.h3}>{item.email}</Text>
                     </View>
                     <View>
                       <View style={{ flexDirection: 'row' }}>
-                        <TouchableOpacity onPress={() => { if (item.permissao === 'true') { item.permissao = 'false' } else { item.permissao = 'true' } }} style={{ height: 15, width: 15, marginLeft: 10, marginRight: 5, borderRadius: 5, backgroundColor: item.permissao === 'true' ? '#00c0ce' : '#7a7a7a' }}></TouchableOpacity>
+                        {/* handlePermission(item.id, !item.can_edit);item.can_edit = !item.can_edit */}
+                        <TouchableOpacity onPress={() => { {if (item.can_edit) { item.can_edit = false } else {item.can_edit= true}} ; handlePermission(item)}} style={{ height: 15, width: 15, marginLeft: 10, marginRight: 5, borderRadius: 5, backgroundColor: item.canEdit === 'true' ? '#00c0ce' : '#7a7a7a' }}></TouchableOpacity>
                         <Text style={styles.linkText1}>Editor</Text>
                       </View>
                     </View>
@@ -374,7 +391,7 @@ export default function EditNote({ navigation, route }) {
                       <View>
                         <View style={{ flexDirection: 'row' }}>
                           <TouchableOpacity
-                            onPress={() => { if (item.permissao === 'true') { item.permissao = 'false' } else { item.permissao = 'true' } }}
+                            onPress={() => { handlePermission(item, !item.can_edit); item.can_edit = !item.can_edit }}
                             style={{ height: 15, width: 15, marginLeft: 10, marginRight: 5, borderRadius: 5, backgroundColor: item.permissao === 'true' ? '#00c0ce' : '#7a7a7a' }}></TouchableOpacity>
                           <Text style={styles.linkText1}>Editor</Text>
                         </View>
