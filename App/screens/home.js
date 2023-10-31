@@ -19,6 +19,8 @@ export default function HomeScreen({ navigation }) {
     const [sharedNotes, setSharedNotes] = useState([]); 
     const [selectedButtonIndex, setSelectedButtonIndex] = useState(0);
 
+
+
     const getNotes = async (idUser) => {
         const obj = {
             "user": {
@@ -27,14 +29,21 @@ export default function HomeScreen({ navigation }) {
         };
         const notas = await notesApi.getNotes(obj);
         const favorite = await notesApi.getFavoriteNotes();
+        const shared = await notesApi.getSharedNotes();
         const response = await AsyncStorage.getItem('user');
 
         if(response){
+
             const userDetails = JSON.parse(response);
             setUserDetails(userDetails);
-            setNotes(notas)
-            setFavoriteNotes(favorite)
+            setNotes(notas);
+            setFavoriteNotes(favorite);
+            setSharedNotes(shared);
+            
             console.log(userDetails)
+            console.log('a',notes)
+            console.log('b',favoriteNotes)
+            console.log('c',sharedNotes)
         }
     }
 
@@ -44,7 +53,7 @@ export default function HomeScreen({ navigation }) {
           const userDetails = JSON.parse(response)
           setUserDetails(userDetails);
           getNotes(userDetails.id);
-        }
+        }   
       }
       
       useEffect(() => {
@@ -171,7 +180,7 @@ export default function HomeScreen({ navigation }) {
             </TouchableOpacity>
         </View>
         <View style={styles.statisticView}>
-            {[userDetails.total_notes, userDetails.favorite_notes, userDetails.shared_notes].map((value, index) => renderButton(value, index))}
+            {[notes.length, favoriteNotes.length, sharedNotes.length].map((value, index) => renderButton(value, index))}
         </View>
         <View style={{ width: windowWidth, height: '5%', flexDirection: 'row', }}>
             {["Notas","Favoritas","Compartilhadas"].map((value, index) => renderTextButton(value, index))}

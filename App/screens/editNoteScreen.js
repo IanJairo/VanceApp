@@ -1,10 +1,9 @@
-import React, { useEffect, useRef, useState} from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Dimensions, SafeAreaView, StyleSheet, Text, TouchableOpacity, View, TextInput, Image, Modal, FlatList, Alert } from 'react-native';
 import { actions, RichToolbar, RichEditor } from 'react-native-pell-rich-editor';
 import moment from 'moment';
 import { route } from '@react-navigation/native'
 
-import testIcon from '../assets/profileIcon.png';
 import backArrow from '../assets/backArrow.png';
 import shareIcon from '../assets/shareIcon.png';
 import deletIcon from '../assets/deleteIcon.png';
@@ -30,24 +29,62 @@ export default function EditNote({ navigation, route }) {
 
   const [descHTML, setDescHTML] = useState('');
   const [showDescError, setShowDescError] = useState(false);
-  const [sharedUsers, setSharedUsers] = useState([
-    { name: 'Péricles', email: 'pericles@vance.com', foto: testIcon, permissao: 'true' },
-    { name: 'Ian', email: 'ian@vance.com', foto: testIcon, permissao: 'true' },
-    { name: 'Joao', email: 'joao@vance.com', foto: testIcon, permissao: 'false' },
-  ]);
+  const [sharedUsers, setSharedUsers] = useState([]);
+
+  const renderProfileIcon = (name) => {
+    return (
+      <View style={{
+        backgroundColor: '#00c0ce',
+        borderRadius: 50,
+        marginHorizontal: 10,
+        width: 40,
+        height: 40,
+        justifyContent: 'center',
+        alignItems: 'center',
+        shadowColor: '#000',
+        shadowOffset: {
+          width: 0,
+          height: 2,
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 3.84,
+        elevation: 5,
+      }}>
+        <Text style={{
+          color: 'white',
+          fontSize: 24,
+          fontWeight: 'bold',
+          fontStyle: 'italic',
+        }}>{name[0]}</Text>
+      </View>
+    );
+  };
+
+  async function getSharedUsers() {
+    const response = await notesApi.getSharedNoteUsers(item.id)
+    if (response.sucess) {
+      setSharedUsers(response.users)
+    } else {
+      Alert.alert('Erro', response.message);
+    }
+  }
 
   useEffect(() => {
     navigation.setOptions({
       headerShown: false, // Esta opção oculta o cabeçalho da tela
     });
+
     const currentDate = new Date();
     const formattedDate = moment(currentDate).format('DD/MM/YYYY');
     setDate(formattedDate);
+    getSharedUsers();
   }, []);
 
   const changeFavoriteHandle = () => {
     setFavorite(!favorite);
   }
+
+
 
   const handleDeleteNote = () => {
     setDeletModalVisible(true);
@@ -98,12 +135,33 @@ export default function EditNote({ navigation, route }) {
     }
   };
 
-  const addSharedUser = () => {
-    const newUser = { name: 'Péricles', email: modalEmail, foto: testIcon, permissao: 'true' };
-    setSharedUsers([...sharedUsers, newUser]);
+  const addSharedUser = async () => {
+    const newUser = {
+      "user": {
+        id: userDetails.id,
+      },
+      "noteId": item.id,
+      "email": modalEmail.toLowerCase(),
+      "canEdit": false
+    };
+
+
+    const response = await notesApi.shareNote(newUser);
+
+    if (!response.sucess) {
+      Alert.alert('Erro', response.message);
+      return
+    }
+
+
+
+    // setSharedUsers([...sharedUsers, newUser]);
     setAddModalVisible(false);
-    setSharedModalVisible(true);
+    getSharedUsers();
+    // setSharedModalVisible(true);
     handleOpenModal();
+
+
   };
 
 
@@ -208,7 +266,7 @@ export default function EditNote({ navigation, route }) {
           <Text style={styles.textButtonStyle}>Save</Text>
         </TouchableOpacity>
       </View>
-        
+
 
       {/* Modal para apagar notas */}
       <Modal
@@ -256,7 +314,9 @@ export default function EditNote({ navigation, route }) {
                 data={sharedUsers}
                 renderItem={({ item }) => (
                   <View style={{ flexDirection: 'row', marginBottom: 15, alignItems: 'center', justifyContent: 'center' }}>
-                    <Image source={item.foto} style={styles.image} />
+
+                    {renderProfileIcon(item.name)}
+
                     <View style={{ flexDirection: 'column', marginRight: 10, width: windowWidth * 0.4 }}>
                       <Text style={styles.h2}>{item.name}</Text>
                       <Text style={styles.h3}>{item.email}</Text>
@@ -290,7 +350,7 @@ export default function EditNote({ navigation, route }) {
           <View style={styles.modalContent}>
             <View style={styles.shareHeader}>
               <TouchableOpacity style={{}} onPress={() => callSharedModal()}><Image source={backArrow} style={styles.image} /></TouchableOpacity>
-              <TouchableOpacity style={{}} onPress={() => addSharedUser()}><Text style={styles.linkText}>Done</Text></TouchableOpacity>
+              <TouchableOpacity style={{}} onPress={() => addSharedUser()}><Text style={styles.linkText}>Adicionar</Text></TouchableOpacity>
             </View>
             <Text style={styles.h1}>Adicionar Pessoas</Text>
             <Text style={styles.h3}>Digite o email da pessoa que deseja adicionar</Text>

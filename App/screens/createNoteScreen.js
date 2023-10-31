@@ -37,6 +37,45 @@ export default function CreateNote({ navigation, route }) {
       {name: 'Joao', email: 'joao@vance.com', foto: testIcon, permissao: 'false'},
     ]);
 
+
+    const renderProfileIcon = (name) => {
+      return (
+        <View style={{
+          backgroundColor: '#00c0ce',
+          borderRadius: 50,
+          marginHorizontal: 10,
+          width: 40,
+          height: 40,
+          justifyContent: 'center',
+          alignItems: 'center',
+          shadowColor: '#000',
+          shadowOffset: {
+            width: 0,
+            height: 2,
+          },
+          shadowOpacity: 0.25,
+          shadowRadius: 3.84,
+          elevation: 5,
+        }}>
+          <Text style={{
+            color: 'white',
+            fontSize: 24,
+            fontWeight: 'bold',
+            fontStyle: 'italic',
+          }}>{name[0]}</Text>
+        </View>
+      );
+    };
+  
+    async function getSharedUsers() {
+      const response = await notesApi.getSharedNoteUsers(item.id)
+      if (response.sucess) {
+        setSharedUsers(response.users)
+      } else {
+        Alert.alert('Erro', response.message);
+      }
+    }
+
     useEffect(() => {
         navigation.setOptions({
           headerShown: false, // Esta opção oculta o cabeçalho da tela
@@ -91,13 +130,35 @@ export default function CreateNote({ navigation, route }) {
       }
     };
 
-    const addSharedUser = () => {
-      const newUser = {name: 'Péricles', email: modalEmail, foto: testIcon, permissao: 'true'};
-      setSharedUsers([...sharedUsers, newUser]);
+    const addSharedUser = async () => {
+      const newUser = {
+        "user": {
+          id: userDetails.id,
+        },
+        "noteId": item.id,
+        "email": modalEmail.toLowerCase(),
+        "canEdit": false
+      };
+  
+  
+      const response = await notesApi.shareNote(newUser);
+  
+      if (!response.sucess) {
+        Alert.alert('Erro', response.message);
+        return
+      }
+  
+  
+  
+      // setSharedUsers([...sharedUsers, newUser]);
       setAddModalVisible(false);
-      setSharedModalVisible(true);
+      getSharedUsers();
+      // setSharedModalVisible(true);
       handleOpenModal();
+  
+  
     };
+  
 
 
     const richTextHandle = (descriptionText) => {
@@ -416,7 +477,7 @@ const styles = StyleSheet.create({
     width: windowWidth*0.7,
   },
   modalButtonYes: {
-    backgroundColor: '#00c0ce',
+    backgroundColor: '#E84D5B',
     borderRadius: 10,
     paddingVertical: 10,
     paddingHorizontal: 20,
@@ -429,7 +490,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     marginHorizontal: 10,
     borderWidth: 1,
-    borderColor: '#00c0ce',
+    borderColor: '#B1B1B1',
   },
   modalButtonTextYes: {
     color: 'white',
@@ -438,7 +499,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   modalButtonTextNo: {
-    color: '#00c0ce',
+    color: '#E84D5B',
     fontWeight: 'bold',
     fontSize: 16,
     textAlign: 'center',
