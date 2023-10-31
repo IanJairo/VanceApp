@@ -11,7 +11,6 @@
       "resizeMode": "contain",
       "backgroundColor": "#ffffff",
       "userInterfaceStyle": "automatic"
-
     },
     "assetBundlePatterns": [
       "**/*"
@@ -25,10 +24,16 @@
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff",
         "userInterfaceStyle": "automatic"
-      }
+      },
+      "package": "com.peur.App"
     },
     "web": {
       "favicon": "./assets/favicon.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "63149dff-f86d-44c9-884b-70a703adc652"
+      }
     }
   }
 }
