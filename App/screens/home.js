@@ -176,10 +176,8 @@ export default function HomeScreen({ navigation }) {
                             marginVertical: 5, 
                             borderRadius: 15,
                             backgroundColor: '#f5f5f5',
-                            borderColor: 'gray',
-                            borderWidth: 0.5,
                             maxHeight: 150,
-                            shadowColor: '#000',
+                            shadowColor: '#00c0ce',
                             shadowOffset: {
                             width: 0,
                             height: 2,

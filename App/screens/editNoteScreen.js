@@ -17,7 +17,7 @@ const windowWidth = Dimensions.get('window').width * 0.9;
 export default function EditNote({ navigation, route }) {
 
   const { userDetails, item } = route.params;
-  const richText = useRef('');
+  const richText = useRef(item.content);
   const [favorite, setFavorite] = useState(item.isfavorite);
   const [date, setDate] = useState('');
   const [title, setTitle] = useState(item.title);
