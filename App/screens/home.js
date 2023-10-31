@@ -25,17 +25,16 @@ export default function HomeScreen({ navigation }) {
                 "id": idUser
             },
         };
-        const response = await notesApi.getNotes(obj);
+        const notas = await notesApi.getNotes(obj);
+        const favorite = await notesApi.getFavoriteNotes();
+        const response = await AsyncStorage.getItem('user');
 
         if(response){
-            setNotes(response)
-        }
-    }
-
-    const getFavoriteNotes = async () => {
-        const response = await notesApi.getFavoriteNotes();
-        if(response){
-            setFavoriteNotes(response)
+            const userDetails = JSON.parse(response);
+            setUserDetails(userDetails);
+            setNotes(notas)
+            setFavoriteNotes(favorite)
+            console.log(userDetails)
         }
     }
 
@@ -45,7 +44,6 @@ export default function HomeScreen({ navigation }) {
           const userDetails = JSON.parse(response)
           setUserDetails(userDetails);
           getNotes(userDetails.id);
-          getFavoriteNotes();
           setIsLoading(false);
         }
       }
@@ -60,10 +58,10 @@ export default function HomeScreen({ navigation }) {
                 const userDetails = JSON.parse(response)
                 setUserDetails(userDetails);
                 getNotes(userDetails.id);
-                getFavoriteNotes();
                 setIsLoading(false);
-                console.log(notes)
-                console.log(favoriteNotes)
+                // console.log(notes)
+                // console.log(favoriteNotes)
+                console.log(userDetails.total_notes)
             }
         }
         fetchData();
@@ -71,8 +69,8 @@ export default function HomeScreen({ navigation }) {
 
     const handleButtonPress = (index) => {
         setSelectedButtonIndex(index);
-        getNotes(setUserDetails.id);
-        };
+        getNotes(userDetails.id);      
+       };
 
     const renderButton = (value, index) => {
           const isSelected = selectedButtonIndex === index;
@@ -165,7 +163,7 @@ export default function HomeScreen({ navigation }) {
             </TouchableOpacity>
         </View>
         <View style={styles.statisticView}>
-            {[userDetails.total_notes, 2, userDetails.shared_notes].map((value, index) => renderButton(value, index))}
+            {[userDetails.total_notes, userDetails.favorite_notes, userDetails.shared_notes].map((value, index) => renderButton(value, index))}
         </View>
         <View style={{ width: windowWidth, height: '5%', flexDirection: 'row', }}>
             {["Notas","Favoritas","Compartilhadas"].map((value, index) => renderTextButton(value, index))}
@@ -183,7 +181,6 @@ export default function HomeScreen({ navigation }) {
                             borderWidth: 0.5,
                          }} 
                          onPress={() => navigation.navigate('EditNote', {userDetails, item})}>
-                        {/* navigation.navigate('EditNote', {userDetails, item}) */}
                         <Text style={{fontWeight: 'bold', fontSize: 18, color: '#2F2E50'}}>{item.title}</Text>
                         <RenderHTML
                             contentWidth={windowWidth*0.9}

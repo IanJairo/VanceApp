@@ -6,7 +6,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 const getUser = async () => {
     const response = await AsyncStorage.getItem('user');
     if (response !== null) {
-        console.log('response', JSON.parse(response));
+        // console.log('response', JSON.parse(response));
         return JSON.parse(response);
     }
 }
@@ -14,7 +14,7 @@ const notesApi = {
     getNotes: async (form) => {
         console.log('entrou', form)
         const userDetails = await getUser();
-        console.log("Aqui deveria ter o token", userDetails);
+        // console.log("Aqui deveria ter o token", userDetails);
         try {
             const response = await axios.post(baseURL+'get', form, {
                 headers: {

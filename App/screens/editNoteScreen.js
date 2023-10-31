@@ -348,6 +348,7 @@ const styles = StyleSheet.create({
   richTextContainer: {
     flex: 1,
     flexDirection: "column-reverse",
+    justifyContent: "flex-end",
     // width: "100%",
     marginBottom: 10,
     height: '50%',
@@ -355,16 +356,6 @@ const styles = StyleSheet.create({
   richTextEditorStyle: {
     borderBottomLeftRadius: 10,
     borderBottomRightRadius: 10,
-    borderWidth: 1,
-    borderColor: "#00c0ce",
-    shadowColor: "#000",
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.23,
-    shadowRadius: 2.62,
-    elevation: 4,
     fontSize: 20,
   },
   richTextToolbarStyle: {

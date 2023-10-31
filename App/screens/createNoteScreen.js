@@ -118,10 +118,10 @@ export default function CreateNote({ navigation, route }) {
             setShowDescError(true);
         } else {
             // jogar pra api
-            console.log(title,descHTML, date, favorite);
+            console.log(title,descHTML, date, favorite, userDetails.id);
             const obj = {
               'user': {
-                'id': userDetails.data.user.id,
+                'id': userDetails.id,
               },
               "title": title,
               "content": descHTML,
@@ -129,6 +129,7 @@ export default function CreateNote({ navigation, route }) {
               'isFavorite': favorite,
             }
             await notes.postNotes(obj);
+            navigation.navigate('Home');
         }
     };
 
@@ -169,7 +170,7 @@ export default function CreateNote({ navigation, route }) {
             placeholder="Anote aqui suas ideias :"
             androidHardwareAccelerationDisabled={true}
             style={styles.richTextEditorStyle}
-            initialHeight={500}
+            initialHeight={300}
           />
           <RichToolbar
             editor={richText}
@@ -337,6 +338,7 @@ const styles = StyleSheet.create({
   richTextContainer: {
     flex: 1,
     flexDirection: "column-reverse",
+    justifyContent: "flex-end",
     // width: "100%",
     marginBottom: 10,
     height: '50%',
@@ -344,16 +346,6 @@ const styles = StyleSheet.create({
   richTextEditorStyle: {
     borderBottomLeftRadius: 10,
     borderBottomRightRadius: 10,
-    borderWidth: 1,
-    borderColor: "#00c0ce",
-    shadowColor: "#000",
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.23,
-    shadowRadius: 2.62,
-    elevation: 4,
     fontSize: 20,
   },
   richTextToolbarStyle: {
