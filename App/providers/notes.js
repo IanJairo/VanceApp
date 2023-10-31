@@ -69,7 +69,20 @@ const notesApi = {
             return [];
         }
     },
-    deleteNote: async (form) => {
+    deleteNote: async (noteId) => {
+        try {
+            const userDetails = await getUser();
+            const response = await axios.delete(baseURL+noteId, {
+                headers: {
+                    Authorization: `Bearer ${userDetails.token}`
+                  }
+            });
+            return true;
+        }
+        catch (error) {
+            console.log(error);
+            return false;
+        }
 
     },
 };
