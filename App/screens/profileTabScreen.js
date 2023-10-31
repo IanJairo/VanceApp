@@ -87,6 +87,10 @@ export default function Profile({ navigation }) {
           <Text>{userDetails.total_notes}</Text>
         </View>
         <View style={styles.statistic}>
+          <Text style={styles.identificationText}>Favoritas:</Text>
+          <Text>{userDetails.favorite_notes}</Text>
+        </View>
+        <View style={styles.statistic}>
           <Text style={styles.identificationText}>Compartilhadas:</Text>
           <Text>{userDetails.shared_notes}</Text>
         </View>

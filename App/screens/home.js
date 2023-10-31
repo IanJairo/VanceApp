@@ -44,7 +44,6 @@ export default function HomeScreen({ navigation }) {
           const userDetails = JSON.parse(response)
           setUserDetails(userDetails);
           getNotes(userDetails.id);
-          setIsLoading(false);
         }
       }
       
@@ -176,9 +175,19 @@ export default function HomeScreen({ navigation }) {
                             padding: 20,  
                             marginVertical: 5, 
                             borderRadius: 15,
-                            backgroundColor: '#E4FDFF',
-                            borderColor: '#00c0ce',
+                            backgroundColor: '#f5f5f5',
+                            borderColor: 'gray',
                             borderWidth: 0.5,
+                            maxHeight: 150,
+                            shadowColor: '#000',
+                            shadowOffset: {
+                            width: 0,
+                            height: 2,
+                            },
+                            shadowOpacity: 0.25,
+                            shadowRadius: 3.84,
+                            elevation: 5,
+
                          }} 
                          onPress={() => navigation.navigate('EditNote', {userDetails, item})}>
                         <Text style={{fontWeight: 'bold', fontSize: 18, color: '#2F2E50'}}>{item.title}</Text>

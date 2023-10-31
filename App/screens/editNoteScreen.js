@@ -18,7 +18,7 @@ export default function EditNote({ navigation, route }) {
 
   const { userDetails, item } = route.params;
   const richText = useRef('');
-  const [favorite, setFavorite] = useState(item.isFavorite);
+  const [favorite, setFavorite] = useState(item.isfavorite);
   const [date, setDate] = useState('');
   const [title, setTitle] = useState(item.title);
   const [modalEmail, setModalEmail] = useState('');
@@ -128,14 +128,14 @@ export default function EditNote({ navigation, route }) {
       console.log(title, descHTML, date, favorite);
       const obj = {
         'user': {
-          'id': userDetails.data.user.id,
+          'id': userDetails.id,
         },
         "title": title,
         "content": descHTML,
         "date": date,
         'isFavorite': favorite,
       }
-      await notes.editNotes(obj, item.id);
+      await notesApi.editNotes(obj, item.id);
       navigation.navigate('Home');
     }
   };
