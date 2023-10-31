@@ -40,11 +40,19 @@ export default function Profile({ navigation }) {
           width: 160,
           height: 160,
           justifyContent: 'center',
-          alignItems: 'center', }}> 
+          alignItems: 'center',shadowColor: '#000',
+          shadowOffset: {
+              width: 0,
+              height: 2,
+          },
+          shadowOpacity: 0.25,
+          shadowRadius: 3.84,
+          elevation: 5, }}> 
               <Text style={{
                   color: 'white',
                   fontSize: 120,
                   fontWeight: 'bold',
+                  fontStyle: 'italic',
               }}>{userDetails.name[0]}</Text>
           </View>
       );
