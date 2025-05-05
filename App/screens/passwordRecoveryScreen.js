@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, Image, Dimensions, TouchableOpacity, TextInput, Alert, Keyboard, KeyboardAvoidingView, Modal } from 'react-native';
+import { View, Text, Image, Dimensions, TouchableOpacity, TextInput, Alert, Platform, Keyboard, KeyboardAvoidingView, Modal } from 'react-native';
 import { StyleSheet } from 'react-native';
 import eyeOpened from '../assets/openEyeIcon.png';
 import eyeClosed from '../assets/closedEyeIcon.png';

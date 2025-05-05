@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, Image, Dimensions, TouchableOpacity, TextInput, Alert, KeyboardAvoidingView, Modal } from 'react-native';
+import { View, Text, Image, Dimensions, TouchableOpacity, TextInput, Alert,  Platform, KeyboardAvoidingView, Modal } from 'react-native';
 import { StyleSheet } from 'react-native';
 import arrowBack from '../assets/backArrow.png';
 import axios from 'axios';

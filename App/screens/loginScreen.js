@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useColorScheme, StyleSheet, View, Text, Image, Dimensions, TouchableOpacity, TextInput, Alert, KeyboardAvoidingView } from 'react-native';
+import { useColorScheme, StyleSheet, View, Text, Image, Dimensions, TouchableOpacity, Platform, TextInput, Alert, KeyboardAvoidingView } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import accessToApp from '../providers/accessToApp';
 import eyeOpened from '../assets/openEyeIcon.png'

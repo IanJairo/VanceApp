@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef } from 'react';
-import { View, Text, Image, Dimensions, TouchableOpacity, TextInput, Alert, Keyboard, KeyboardAvoidingView } from 'react-native';
+import { View, Text, Image, Dimensions, TouchableOpacity, Platform, TextInput, Alert, Keyboard, KeyboardAvoidingView } from 'react-native';
 import { StyleSheet } from 'react-native';
 import padlockIcon from '../assets/padlockIcon.png';
 import { route } from '@react-navigation/native';
